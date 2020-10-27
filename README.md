@@ -20,7 +20,9 @@ _Proiect realizat in cadrul [**Facultatii de Inginerie Electrica si Stiinta Calc
 
 1. Instalati [git](https://git-scm.com)
 2. Copiati codul pe masina locala cu comanda: 
-> git clone https://github.com/ValiA-cyber/DigitalizareinFootball.git
+```
+git clone https://github.com/ValiA-cyber/DigitalizareinFootball.git
+```
 3. Deschideti proiectul cu eclipse sau intellij
     * Access point pentru gui: GUIRun.java
     * Access point pentru backend: Main.java

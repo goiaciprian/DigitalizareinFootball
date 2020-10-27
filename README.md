@@ -15,3 +15,14 @@ si o parola confidentiala cu care se vor autentifica in zona special creata;
 3. Interactiunea cu fanii, rezervarea locurilor in tribuna.
 
 _Proiect realizat in cadrul [**Facultatii de Inginerie Electrica si Stiinta Calculatoarelor.**](https://iesc.unitbv.ro/)_
+
+## Instalare
+
+1. Instalati [git](https://git-scm.com)
+2. Copiati codul pe masina locala cu comanda: 
+```
+git clone https://github.com/ValiA-cyber/DigitalizareinFootball.git
+```
+3. Deschideti proiectul cu eclipse sau intellij
+    * Access point pentru gui: GUIRun.java
+    * Access point pentru backend: Main.java

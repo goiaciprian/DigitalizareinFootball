@@ -24,11 +24,12 @@ public enum Positions {
     CAM("CAM", "Central Attacking Midfielder"),
     LAM("LAM","Left Attacking Midfielder"),
     RAM("RAM", "Right Attacking Midfielder"),
-    LWF("LWF", "Left Wing Forward"),
-    RWF("RWF", "Right Wing Forward"),
+    LW("LW", "Left Winger"),
+    RW("RW", "Right Winger"),
     CF("CF", "Central Forward"),
     LCF("LCF","Left Central Forward"),
     RCF("RCF", "Right Central Forward");
+    ST("ST","Striker");
 
     private final String _key;
     private final String _value;

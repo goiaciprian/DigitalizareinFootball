@@ -3,6 +3,10 @@ package com.OlimpiaComarnic.Backend.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ Enumeratie cu toate pozitiile pe terenul de football
+
+*/
 public enum Positions {
     GK("GK", "Goalkeeper"),
     SW("SW", "Sweeper"),
@@ -47,6 +51,9 @@ public enum Positions {
         return value.get(i);
     }
 
+    /**
+     *  Metoda care creeaza o mapa (key: value) pentru toate elementele din enumeratie*
+     */
     private static void initMapping() {
         value = new HashMap<>();
         for(Positions pos: values())
@@ -63,8 +70,6 @@ public enum Positions {
 
     @Override
     public String toString() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Position: { key: ").append(_key).append(", value: ").append(_value).append('}');
-        return stringBuilder.toString();
+        return "Position: { key: " + _key + ", value: " + _value + '}';
     }
 }

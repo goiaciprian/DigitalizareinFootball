@@ -1,5 +1,7 @@
 package com.OlimpiaComarnic.GUI;
 
+import com.OlimpiaComarnic.Backend.dao.UserDAO;
+import com.OlimpiaComarnic.Backend.entity.User;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -53,27 +55,37 @@ public class LogInController {
         String username = userName.getText();
         String pass = password.getText();
 
-        if (username.equals("dannyM")) {
-            if (pass.equals("barosanuNr1")) {
+        errorText.setOpacity(0);
+
+        if (username.equals("") && pass.equals("")) {
+            errorText.setText("Username and password cannot be empty.");
+            errorText.setOpacity(1.0);
+            return;
+        }
+        else if(username.equals("")) {
+            errorText.setText("Username cannot be empty.");
+            errorText.setOpacity(1.0);
+            return;
+        }
+        else if(pass.equals("")) {
+            errorText.setText("Password cannot be empty.");
+            errorText.setOpacity(1.0);
+            return;
+        }
+
+        User curr = UserDAO.findUser(username);
+
+        if (curr != null) {
+            if (curr.checkPassword(pass)) {
                 System.out.println("merge wei");
+                errorText.setText("Successfully connected.");
+                errorText.setOpacity(1.0);
             } else {
-                if (pass.equals("")) {
-                    errorText.setText("Password cannot be blank.");
-                } else {
-                    errorText.setText("Username or password is wrong.");
-                }
+                errorText.setText("Username or password is wrong.");
                 errorText.setOpacity(1.0);
             }
         } else {
-            if (username.equals("")) {
-                errorText.setText("Username cannot be blank.");
-            } else {
-                if (pass.equals("")) {
-                    errorText.setText("Password cannot be blank.");
-                } else {
-                    errorText.setText("Username or password is wrong.");
-                }
-            }
+            errorText.setText("Username or password is wrong.");
             errorText.setOpacity(1.0);
         }
 

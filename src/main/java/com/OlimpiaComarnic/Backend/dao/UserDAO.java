@@ -39,7 +39,7 @@ public class UserDAO {
     }
 
     public synchronized static User findUser(String username) {
-        User userO = new User();
+        User userO = null;
         MongoClient con = DBConnection.openConn();
         assert con != null;
         MongoDatabase proiect = con.getDatabase("projectDB");
@@ -49,6 +49,7 @@ public class UserDAO {
             while (cursor.hasNext()) {
                 Document currUser = cursor.next();
                 if(currUser.getString("username").equals(username)) {
+                    userO = new User();
                     userO.setAdmin(currUser.getBoolean("isAdmin"));
                     userO.setUsername(currUser.getString("username"));
                     userO.setEncPassword(currUser.getString("password"));

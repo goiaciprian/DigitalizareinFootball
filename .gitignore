@@ -129,4 +129,8 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 
+### Exe ###
+.exe
+
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij+all,maven
+/deploy/OlimpiaComarnic.exe

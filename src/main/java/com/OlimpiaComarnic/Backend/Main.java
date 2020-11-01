@@ -1,11 +1,16 @@
 package com.OlimpiaComarnic.Backend;
 
+import com.OlimpiaComarnic.Backend.dao.UserDAO;
 import com.OlimpiaComarnic.Backend.entity.Player;
+import com.OlimpiaComarnic.Backend.entity.User;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 
+import org.mindrot.jbcrypt.BCrypt;
+
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -13,36 +18,19 @@ import java.util.Scanner;
 
 // ? metoda de stergere din baza de date sa fie statica pentru orice obiect ? ia ca parametru obiectul pe care sa-l stearga
 
-/***
-Clasa main pentru teste in backend
+/**
+ * Clasa main pentru teste in backend
  */
 public class Main {
     public static void main(String[] args) {
-        MongoClient mongoClient = DBConnection.openConn();
-        assert mongoClient != null;
-        MongoDatabase projectDB = mongoClient.getDatabase("projectDB");
-        MongoCollection players = projectDB.getCollection("players");
-        for (Object o : players.find()) {
-            System.out.println(o);
+
+        User a = new User("asd", "sad", true);
+        List<User> as = UserDAO.findAll();
+
+        System.out.println("inainte de");
+        for(User us: as) {
+            System.out.println(us);
         }
-        System.out.println("DB open successfully");
-
-        Player a = new Player("Andrei");
-        Player b = new Player("Ionut");
-
-        a.insertIntoDB();
-        b.insertIntoDB();
-
-        Scanner scan = new Scanner(System.in);
-        int aasd = 0;
-        while ( aasd != 10 ) {
-            System.out.print(">");
-            aasd = scan.nextInt();
-            System.out.println("Input " + aasd);
-        }
-
-        DBConnection.closeConn(mongoClient);
-        System.out.println("DB closed successfully");
 
     }
 }

@@ -32,7 +32,7 @@ public enum Positions {
     RW("RW", "Right Winger"),
     CF("CF", "Central Forward"),
     LCF("LCF","Left Central Forward"),
-    RCF("RCF", "Right Central Forward");
+    RCF("RCF", "Right Central Forward"),
     ST("ST","Striker");
 
     private final String _key;

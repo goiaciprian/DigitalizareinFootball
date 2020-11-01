@@ -1,0 +1,5 @@
+module:com.OlimpiaComarnic.GUI
+com.OlimpiaComarnic.Backend
+com.OlimpiaComarnic.Backend.entity
+com.OlimpiaComarnic.Backend.utils
+com.OlimpiaComarnic.GUI

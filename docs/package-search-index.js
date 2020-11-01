@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"m":"com.OlimpiaComarnic.GUI","l":"com.OlimpiaComarnic.Backend"},{"m":"com.OlimpiaComarnic.GUI","l":"com.OlimpiaComarnic.Backend.entity"},{"m":"com.OlimpiaComarnic.GUI","l":"com.OlimpiaComarnic.Backend.utils"},{"m":"com.OlimpiaComarnic.GUI","l":"com.OlimpiaComarnic.GUI"}]

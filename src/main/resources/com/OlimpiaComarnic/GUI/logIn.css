@@ -1,0 +1,16 @@
+.logInAnchorPane {
+    -fx-background: radial-gradient(center 50% 50% , radius 100% , #ffffff 30%, #00a3c3);
+}
+
+.logInButt {
+    -fx-border-color: #ACACAC;
+    -fx-background-color:  #78D5D7;
+    -fx-border-radius: 5%;
+}
+
+.inputs {
+    -fx-border-radius: 10%;
+    -fx-border-color: black;
+    -fx-focus-color: -fx-control-inner-background ;
+    -fx-faint-focus-color: -fx-control-inner-background ;
+}

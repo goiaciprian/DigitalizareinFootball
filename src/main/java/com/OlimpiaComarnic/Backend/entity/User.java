@@ -3,6 +3,13 @@ package com.OlimpiaComarnic.Backend.entity;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+
+/**
+ * Clasa user contine:
+ *    - username
+ *    - parola encryptata SHA-256
+ *    - daca este admin;
+ */
 public class User {
     private String Username, encPassword;
     private boolean isAdmin;

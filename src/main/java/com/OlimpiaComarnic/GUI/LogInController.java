@@ -2,6 +2,7 @@ package com.OlimpiaComarnic.GUI;
 
 import com.OlimpiaComarnic.Backend.dao.UserDAO;
 import com.OlimpiaComarnic.Backend.entity.User;
+import com.OlimpiaComarnic.GUI.Popup.Popup1;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,6 +12,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+
+import java.io.IOException;
 
 public class LogInController {
 

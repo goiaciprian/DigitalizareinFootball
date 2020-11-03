@@ -5,5 +5,7 @@ module com.OlimpiaComarnic.GUI {
     requires jbcrypt;
 
     opens com.OlimpiaComarnic.GUI to javafx.fxml;
+    opens com.OlimpiaComarnic.GUI.Popup to javafx.fxml, javafx.graphics;
     exports com.OlimpiaComarnic.GUI;
+    exports com.OlimpiaComarnic.GUI.Popup;
 }

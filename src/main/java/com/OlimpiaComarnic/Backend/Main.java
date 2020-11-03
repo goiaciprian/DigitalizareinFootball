@@ -1,5 +1,6 @@
 package com.OlimpiaComarnic.Backend;
 
+import com.OlimpiaComarnic.Backend.dao.PlayerDAO;
 import com.OlimpiaComarnic.Backend.dao.UserDAO;
 import com.OlimpiaComarnic.Backend.entity.Player;
 import com.OlimpiaComarnic.Backend.entity.User;
@@ -14,23 +15,28 @@ import java.util.List;
 import java.util.Scanner;
 
 
-//TODO metode de alterat informati in baza de date
-
-// ? metoda de stergere din baza de date sa fie statica pentru orice obiect ? ia ca parametru obiectul pe care sa-l stearga
-
 /**
  * Clasa main pentru teste in backend
  */
 public class Main {
     public static void main(String[] args) {
 
-        User a = new User("asd", "sad", true);
-        List<User> as = UserDAO.findAll();
+        Player pl1 = PlayerDAO.findOne("da da");
+        Player pl2 = new Player("da da", 12);
+        pl2.setPaseGol(12);
+        pl2.setGoluri(5);
+        pl2.addAparitie(90, "meci1");
+        pl2.addAparitie(44, "meci2");
+        pl2.addAparitie( 60,"meci3");
+//        pl1.setCartonaseGalbene(4);
+//        pl1.setCartonaseRosii(1);
+//        pl1.setGoluri(3);
+//        pl1.setPaseGol(4);
+//        pl1.addAparitie(90, "primulMeci");
+//        pl1.addAparitie(85, "al doilea meci");
+//
+        PlayerDAO.deleteOne(pl2);
 
-        System.out.println("inainte de");
-        for(User us: as) {
-            System.out.println(us);
-        }
 
     }
 }

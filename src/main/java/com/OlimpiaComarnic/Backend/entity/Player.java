@@ -1,7 +1,7 @@
 package com.OlimpiaComarnic.Backend.entity;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -15,22 +15,54 @@ import java.util.List;
 public class Player {
 
     private String nume;
-    private String prenume;
     private int goluri;
     private int paseGol;
     private int cartonaseRosii, cartonaseGalbene;
-    private HashMap<Match, Integer> aparitii;
+    private HashMap<String, Integer> aparitii;
     private int numarTricou;
 
-    public Player(String nume, String prenume, int numarTricou) {
+    public Player(String nume, int numarTricou) {
         this.nume = nume;
-        this.prenume = prenume;
         this.numarTricou = numarTricou;
         this.goluri = 0;
         this.paseGol = 0;
         this.cartonaseGalbene = 0;
         this.cartonaseRosii = 0;
         this.aparitii = new HashMap<>();
+    }
+
+    public Player() {
+        this.nume = "null";
+        this.numarTricou = -1;
+        this.goluri = 0;
+        this.paseGol = 0;
+        this.cartonaseGalbene = 0;
+        this.cartonaseRosii = 0;
+        this.aparitii = new HashMap<>();
+    }
+
+    /**
+     * Adauga la totalul de goluri
+     * @param goluri nr gouri date
+     */
+    public void setGoluri(int goluri) {
+        this.goluri = goluri;
+    }
+
+    /**
+     * Adauga la totalul de pase de gol
+     * @param paseGol nr pase de gol
+     */
+    public void setPaseGol(int paseGol) {
+        this.paseGol = paseGol;
+    }
+
+    /**
+     * Adauga la totalul de cartonase rosii
+     * @param cartonaseRosii nr cartonase rosii
+     */
+    public void setCartonaseRosii(int cartonaseRosii) {
+        this.cartonaseRosii = cartonaseRosii;
     }
 
     /**
@@ -130,11 +162,9 @@ public class Player {
      * Schimba numele jucatorului, daca este cazul
      *
      * @param nume    numele nou pentru jucator
-     * @param prenume prenumele nou pentru jucator
      */
-    public void setNume(String nume, String prenume) {
+    public void setNume(String nume) {
         this.nume = nume;
-        this.prenume = prenume;
     }
 
     /**
@@ -143,34 +173,51 @@ public class Player {
      * @return numele jucatorului
      */
     public String getNume() {
-        return this.nume + " " + this.prenume;
+        return this.nume;
     }
 
     /**
      * Metoda care adauga numarul de minute jucate intr-un meci
      * @param minute numarul de minute jucate
-     * @param meci micul in care a jucat
+     * @param titluMeci titlul meciului in care a jucat
      */
-    public void addAparitie(int minute, Match meci) {
+    public void addAparitie(int minute, String titluMeci) {
         if(minute < 0)
             return;
-        aparitii.put(meci, minute);
+        aparitii.put(titluMeci, minute);
     }
 
     /**
      *  Returneaza un hashmap cu toate meciurile si minutele jucate
      * @return toate meciuile si minutele jucte
      */
-    public HashMap<Match, Integer> getAparitii() {
+    public HashMap<String, Integer> getAparitii() {
         return aparitii;
     }
 
-    public int minuteJucateInMeci(Match meci) {
-        for(Match m: aparitii.keySet()) {
-            if(m == meci)
-                return aparitii.get(meci);
+    public int minuteJucateInMeci(String titluMeci) {
+        for(String m: aparitii.keySet()) {
+            if(m.equals(titluMeci))
+                return aparitii.get(titluMeci);
         }
         return 0;
     }
 
+    @Override
+    public String toString() {
+
+        StringBuilder apar = new StringBuilder();
+        for(Map.Entry<String, Integer> kv: aparitii.entrySet()) {
+            apar.append(" ").append(kv.getKey()).append(" ").append(kv.getValue()).append(" ");
+        }
+
+        return "Player{" +
+                "nume='" + nume + '\'' +
+                ", goluri=" + goluri +
+                ", paseGol=" + paseGol +
+                ", cartonaseRosii=" + cartonaseRosii +
+                ", cartonaseGalbene=" + cartonaseGalbene +
+                ", numarTricou=" + numarTricou +
+                ",\n aparitii: " + apar.toString() + '}';
+    }
 }

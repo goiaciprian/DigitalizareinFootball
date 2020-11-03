@@ -1,5 +1,7 @@
 module:com.OlimpiaComarnic.GUI
 com.OlimpiaComarnic.Backend
+com.OlimpiaComarnic.Backend.dao
 com.OlimpiaComarnic.Backend.entity
 com.OlimpiaComarnic.Backend.utils
 com.OlimpiaComarnic.GUI
+com.OlimpiaComarnic.GUI.Popup

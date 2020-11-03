@@ -1,7 +1,11 @@
 package com.OlimpiaComarnic.Backend.utils;
 
+import com.OlimpiaComarnic.GUI.Popup.Popup1;
+
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.MongoConfigurationException;
+
 
 /**
  * Clasa care realizeaza conexiunea la baza de date
@@ -16,14 +20,21 @@ public class DBConnection {
      *
      * @return MongoClient, daca conexiune a fost cu success, si NULL, daca a aparut o erroare
      */
-    public static MongoClient openConn() {
-        MongoClientURI url = new MongoClientURI(connStr);
+    public static MongoClient openConn()  {
+
         try {
+            MongoClientURI url = new MongoClientURI(connStr);
             return new MongoClient(url);
-        } catch (Exception ex) {
-            System.out.println("Erroare in conectare: " + ex.getMessage());
-            return null;
         }
+        catch (MongoConfigurationException ignored) {
+            try {
+                new Popup1().start(Popup1.returnMainStage());
+            } catch (Exception ignored1) { }
+        }
+        catch (Exception ex) {
+            System.out.println("Erroare in conectare: " + ex.getMessage());
+        }
+        return null;
     }
 
     /**

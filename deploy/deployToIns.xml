@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>D:\vsc\javaIDE\DigitalizareinFootball\target\DigitalizareinFootball-1.0-SNAPSHOT-jar-with-dependencies.jar</jar>
+  <outfile>D:\vsc\javaIDE\DigitalizareinFootball\deploy\OlimpiaComarnicToIns.exe</outfile>
+  <errTitle>An error has occured.</errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl>https://github.com/vsDeus/DigitalizareinFootball/issues</supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>true</restartOnCrash>
+  <manifest></manifest>
+  <icon>D:\vsc\javaIDE\DigitalizareinFootball\deploy\olimpiacom_WJJ_icon.ico</icon>
+  <classPath>
+    <mainClass>com.OlimpiaComarnic.GUI.Main</mainClass>
+  </classPath>
+  <jre>
+    <path>bin/jre</path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion>1.8</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>jdkOnly</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+  <versionInfo>
+    <fileVersion>1.0.0.1</fileVersion>
+    <txtFileVersion>1.0.0</txtFileVersion>
+    <fileDescription>Windows aplication for Olimpia Comarnic project.</fileDescription>
+    <copyright>UNITBv</copyright>
+    <productVersion>1.0.0.1</productVersion>
+    <txtProductVersion>1.0.0</txtProductVersion>
+    <productName>OlimpiaComarnic</productName>
+    <companyName>OlimpiaComarnic</companyName>
+    <internalName>OlimpiaComarnic</internalName>
+    <originalFilename>OlimpiaComarinc.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>ENGLISH_US</language>
+  </versionInfo>
+  <messages>
+    <startupErr>An error occurred while starting the application.</startupErr>
+    <bundledJreErr>This application was configured to use a bundled Java Runtime Environment but the runtime is missing or corrupted.</bundledJreErr>
+    <jreVersionErr>This application requires a Java Runtime Environment</jreVersionErr>
+    <launcherErr>The registry refers to a nonexistent Java Runtime Environment installation or the runtime is corrupted.</launcherErr>
+    <instanceAlreadyExistsMsg>An application instance is already running.</instanceAlreadyExistsMsg>
+  </messages>
+</launch4jConfig>

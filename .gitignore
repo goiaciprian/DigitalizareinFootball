@@ -131,7 +131,9 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 ### Exe ###
-.exe
+/deploy/*.exe
+/deploy/Installer/*exe
+/deploy/Installer/bin/
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij+all,maven
-/deploy/OlimpiaComarnic.exe
+

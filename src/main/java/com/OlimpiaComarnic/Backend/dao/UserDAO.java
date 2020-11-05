@@ -2,7 +2,6 @@ package com.OlimpiaComarnic.Backend.dao;
 
 import com.OlimpiaComarnic.Backend.entity.User;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -25,9 +24,7 @@ public class UserDAO {
     public static List<User> findAll() {
         List<User> rez = new ArrayList<>();
 
-        MongoClient con = DBConnection.openConn();
-        if(con == null) return null;
-        MongoDatabase project =  con.getDatabase("projectDB");
+        MongoDatabase project =  DBConnection.getDatabase();
         MongoCollection<Document> users = project.getCollection("users");
 
         try (MongoCursor<Document> cursor = users.find().iterator()) {
@@ -39,8 +36,6 @@ public class UserDAO {
                 user.setAdmin(userDB.getBoolean("isAdmin"));
                 rez.add(user);
             }
-        } finally {
-            DBConnection.closeConn(con);
         }
 
         return rez;
@@ -53,9 +48,7 @@ public class UserDAO {
      */
     public static User findUser(String username) {
         User userO = null;
-        MongoClient con = DBConnection.openConn();
-        if(con == null) return null;
-        MongoDatabase proiect = con.getDatabase("projectDB");
+        MongoDatabase proiect = DBConnection.getDatabase();
         MongoCollection<Document> users = proiect.getCollection("users");
 
         try (MongoCursor<Document> cursor = users.find().iterator()) {
@@ -70,8 +63,6 @@ public class UserDAO {
                 }
             }
 
-        } finally {
-            DBConnection.closeConn(con);
         }
 
         return userO;
@@ -90,13 +81,10 @@ public class UserDAO {
                     .append("password", user.getEncPassword())
                     .append("isAdmin", user.isAdmin());
 
-            MongoClient con = DBConnection.openConn();
-            if(con == null) return;
-            MongoDatabase project = con.getDatabase("projectDB");
+            MongoDatabase project = DBConnection.getDatabase();
             MongoCollection<Document> users = project.getCollection("users");
             users.insertOne(userDB);
 
-            DBConnection.closeConn(con);
 
         });
         worker.start();
@@ -119,9 +107,7 @@ public class UserDAO {
             if(findUser(oldUsername) == null)
                 return;
 
-            MongoClient con = DBConnection.openConn();
-            if(con == null) return;
-            MongoDatabase proiect = con.getDatabase("projectDB");
+            MongoDatabase proiect = DBConnection.getDatabase();
             MongoCollection<Document> collection = proiect.getCollection("users");
             if(!oldUsername.equals(newUsername)) {
                 collection.updateOne(Filters.eq("username", oldUsername), Updates.set("username", newUsername));
@@ -143,11 +129,7 @@ public class UserDAO {
             if(findUser(user.getUsername()) == null)
                 return;
 
-            System.out.println(user);
-
-            MongoClient con = DBConnection.openConn();
-            if(con == null) return;
-            MongoDatabase proiect = con.getDatabase("projectDB");
+            MongoDatabase proiect = DBConnection.getDatabase();
             MongoCollection<Document> users = proiect.getCollection("users");
 
             users.deleteOne(

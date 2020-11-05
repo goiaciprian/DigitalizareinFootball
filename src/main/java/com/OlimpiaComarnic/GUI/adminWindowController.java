@@ -11,7 +11,7 @@ public class adminWindowController {
     @FXML
     void initialize() {
 
-        // TODO correct size
+        // TODO correct size and position
         GUIRun.currStage.setResizable(true);
         GUIRun.currStage.setWidth(900);
         GUIRun.currStage.setHeight(500);

@@ -1,5 +1,6 @@
 package com.OlimpiaComarnic.GUI;
 
+import com.OlimpiaComarnic.Backend.utils.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,6 +27,7 @@ public class GUIRun  extends Application {
         primaryStage.getIcons().add(new Image(GUIRun.class.getResourceAsStream("olimpiaCom.png")));
 
         currStage = primaryStage;
+        primaryStage.setOnCloseRequest(windowEvent -> DBConnection.closeConn());
 
         primaryStage.show();
     }

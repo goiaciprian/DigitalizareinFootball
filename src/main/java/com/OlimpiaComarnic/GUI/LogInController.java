@@ -1,5 +1,6 @@
 package com.OlimpiaComarnic.GUI;
 
+import com.OlimpiaComarnic.Backend.dao.UserDAO;
 import com.OlimpiaComarnic.Backend.entity.User;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -58,8 +59,8 @@ public class LogInController {
             return;
         }
 
-//        User curr = UserDAO.findUser(username);
-        User curr = new User("admin", "admin", true);
+        User curr = UserDAO.findUser(username);
+//        User curr = new User("admin", "admin", true);
 
         if (curr != null) {
             if (curr.checkPassword(pass)) {

@@ -1,10 +1,11 @@
 package com.OlimpiaComarnic.Backend.utils;
 
+import com.OlimpiaComarnic.GUI.GUIRun;
 import com.OlimpiaComarnic.GUI.Popup.Popup1;
-
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoConfigurationException;
+import com.mongodb.client.MongoDatabase;
 
 
 /**
@@ -14,21 +15,26 @@ import com.mongodb.MongoConfigurationException;
 public class DBConnection {
 
     private final static String connStr = "mongodb+srv://application:SldBoKoldBDTLYFp@sdapcluster.5axsh.mongodb.net/projectDB?retryWrites=true&w=majority";
-
+    private static MongoClient con = null;
     /**
      * Metoda de creare a conexinii catre baza de date
      *
-     * @return MongoClient, daca conexiune a fost cu success, si NULL, daca a aparut o erroare
+     * @return MongoDatabase, daca conexiune a fost cu success, si NULL, daca a aparut o erroare
      */
-    public static MongoClient openConn()  {
+    public static MongoDatabase getDatabase()  {
 
         try {
-            MongoClientURI url = new MongoClientURI(connStr);
-            return new MongoClient(url);
+            if (con == null) {
+                MongoClientURI url = new MongoClientURI(connStr);
+                con =  new MongoClient(url);
+            }
+            return con.getDatabase("projectDB");
         }
         catch (MongoConfigurationException ignored) {
+
+            //todo create popup
             try {
-                new Popup1().start(Popup1.returnMainStage());
+                new Popup1().start(GUIRun.currStage);
             } catch (Exception ignored1) { }
         }
         catch (Exception ex) {
@@ -40,12 +46,11 @@ public class DBConnection {
     /**
      * Metoda de inchidere a conexiunii catre bazade date
      *
-     * @param mongcl Conexiunea care trebuie sa fie inchisa
      */
-    public static void closeConn(MongoClient mongcl) {
-        if(mongcl != null) {
+    public static void closeConn() {
+        if(con != null) {
             try {
-                mongcl.close();
+                con.close();
             } catch (Exception ignored) { }
         }
     }

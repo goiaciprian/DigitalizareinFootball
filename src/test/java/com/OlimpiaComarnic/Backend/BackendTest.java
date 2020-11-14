@@ -5,11 +5,11 @@ import com.OlimpiaComarnic.Backend.dao.UserDAO;
 import com.OlimpiaComarnic.Backend.entity.Player;
 import com.OlimpiaComarnic.Backend.entity.User;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.util.List;
@@ -29,7 +29,6 @@ public class BackendTest {
     @Test
     public void findAllAndOnePlayers() {
         List<Player> all = PlayerDAO.findAll();
-        assert all != null: "findAll returned null";
         int allSize = all.size()-1;
 
         Player expected = all.get(allSize);
@@ -37,6 +36,7 @@ public class BackendTest {
 
         assert actual != null: "findOne returned null";
         assertEquals(expected.toString(), actual.toString());
+
     }
 
     /**
@@ -60,6 +60,7 @@ public class BackendTest {
         PlayerDAO.deleteOne(updatePl);
         PlayerDAO.worker.join();
         assertFalse(fastFind(updatePl));
+
     }
 
     /**
@@ -69,13 +70,13 @@ public class BackendTest {
     @Test
     public void findOneAndAllUsers() {
         List<User> all = UserDAO.findAll();
-        assert all != null: "findAll returned null";
         int allSize = all.size()-1;
 
         User expected = all.get(allSize);
         User actual = UserDAO.findUser(all.get(allSize).getUsername());
 
         assertEquals(expected.toString(), actual.toString());
+
     }
 
     /**
@@ -99,14 +100,19 @@ public class BackendTest {
         UserDAO.deleteUser(user2);
         UserDAO.worker.join();
         assertFalse(fastFind(user2));
+
+    }
+
+    @AfterClass
+    public static void closeDB() {
+        DBConnection.closeConn();
     }
 
     private boolean fastFind(Object obj) {
-        MongoClient con = DBConnection.openConn();
-        assert con != null: "Connection null";
-        MongoDatabase proiect = con.getDatabase("projectDB");
+        MongoDatabase proiect = DBConnection.getDatabase();
         if(obj instanceof Player) {
             Player pl = (Player) obj;
+            assert proiect != null: "Error occurred when creating database connection";
             MongoCollection<Document> players = proiect.getCollection("players");
 
             try (MongoCursor<Document> cursor = players.find().iterator()) {
@@ -121,6 +127,7 @@ public class BackendTest {
         }
         if(obj instanceof User) {
             User user = (User) obj;
+            assert proiect != null: "Error occurred when creating database connection";
             MongoCollection<Document> users = proiect.getCollection("users");
 
             try (MongoCursor<Document> cursor = users.find().iterator()) {

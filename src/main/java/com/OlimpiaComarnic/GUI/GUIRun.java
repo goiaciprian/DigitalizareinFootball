@@ -1,5 +1,6 @@
 package com.OlimpiaComarnic.GUI;
 
+import com.OlimpiaComarnic.Backend.utils.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,20 +10,26 @@ import javafx.stage.Stage;
 
 public class GUIRun  extends Application {
 
+    public static Stage currStage;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent parent = FXMLLoader.load(GUIRun.class.getResource("LogIn.fxml"));
+        currStage = primaryStage;
 
+        Parent parent = FXMLLoader.load(GUIRun.class.getResource("LogIn.fxml"));
         Scene scene = new Scene(parent);
+
         primaryStage.setResizable(false);
         primaryStage.setTitle("Olimpia Comarnic Manager");
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(GUIRun.class.getResourceAsStream("olimpiaCom.png")));
 
+        //closes database connection
+        primaryStage.setOnCloseRequest(windowEvent -> DBConnection.closeConn());
         primaryStage.show();
     }
 }

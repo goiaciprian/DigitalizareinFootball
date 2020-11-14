@@ -2,20 +2,14 @@ package com.OlimpiaComarnic.GUI;
 
 import com.OlimpiaComarnic.Backend.dao.UserDAO;
 import com.OlimpiaComarnic.Backend.entity.User;
-import com.OlimpiaComarnic.GUI.Popup.Popup1;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-
-import java.io.IOException;
 
 public class LogInController {
 
@@ -36,22 +30,8 @@ public class LogInController {
         // removes default focus on inputs
         Platform.runLater( () -> anchor.requestFocus() );
 
-
-        logIn.setOnMouseEntered(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent t) {
-                logIn.setStyle("-fx-background-color:#dae7f3;");
-            }
-        });
-
-        logIn.setOnMouseExited(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent t) {
-                logIn.setStyle("-fx-background-color:  #78D5D7;");
-            }
-        });
+        logIn.setOnMouseEntered(t -> logIn.setStyle("-fx-background-color:#dae7f3;"));
+        logIn.setOnMouseExited(t -> logIn.setStyle("-fx-background-color:  #78D5D7;"));
 
     }
 
@@ -79,12 +59,17 @@ public class LogInController {
         }
 
         User curr = UserDAO.findUser(username);
+//        User curr = new User("admin", "admin", true);
+        if(curr == null)
+            return;
 
-        if (curr != null) {
+        if (curr.getUsername().equals("null")) {
             if (curr.checkPassword(pass)) {
-                System.out.println("merge wei");
-                errorText.setText("Successfully connected.");
-                errorText.setOpacity(1.0);
+                try {
+                    anchor.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("adminWindow.fxml")));
+                }
+                catch (Exception ignored) { }
+//                finally { System.out.println("done"); }
             } else {
                 errorText.setText("Username or password is wrong.");
                 errorText.setOpacity(1.0);

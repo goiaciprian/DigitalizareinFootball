@@ -2,7 +2,6 @@ package com.OlimpiaComarnic.Backend.dao;
 
 import com.OlimpiaComarnic.Backend.entity.Player;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -26,9 +25,8 @@ public class PlayerDAO {
     public static List<Player> findAll() {
         List<Player> rez = new ArrayList<>();
 
-        MongoClient con = DBConnection.openConn();
-        if(con == null) return null;
-        MongoDatabase proiect = con.getDatabase("projectDB");
+
+        MongoDatabase proiect = DBConnection.getDatabase();
         MongoCollection<Document> collection = proiect.getCollection("players");
 
         try(MongoCursor<Document> cursor = collection.find().iterator()) {
@@ -53,9 +51,6 @@ public class PlayerDAO {
         } catch (Exception ignored) {
             System.err.println("Error in findAll players");
         }
-        finally {
-            DBConnection.closeConn(con);
-        }
 
         return rez;
     }
@@ -67,9 +62,7 @@ public class PlayerDAO {
      */
     public static Player findOne(String playerName) {
         Player player = null;
-        MongoClient con = DBConnection.openConn();
-        if(con == null) return null;
-        MongoDatabase proiect = con.getDatabase("projectDB");
+        MongoDatabase proiect = DBConnection.getDatabase();
         MongoCollection<Document> players = proiect.getCollection("players");
 
         try (MongoCursor<Document> cursor = players.find().iterator()) {
@@ -94,8 +87,6 @@ public class PlayerDAO {
             }
         } catch (Exception ignored) {
             System.err.println("Error in findOne player");
-        } finally {
-            DBConnection.closeConn(con);
         }
         return player;
     }
@@ -115,9 +106,7 @@ public class PlayerDAO {
                 return;
             }
 
-            MongoClient con = DBConnection.openConn();
-            if(con == null) return;
-            MongoDatabase proiect = con.getDatabase("projectDB");
+            MongoDatabase proiect = DBConnection.getDatabase();
             MongoCollection<Document> players = proiect.getCollection("players");
 
             List<Document> arrDoc = new ArrayList<>();
@@ -138,8 +127,6 @@ public class PlayerDAO {
                     .append("aparitii", arrDoc);
 
             players.insertOne(playerDB);
-
-            DBConnection.closeConn(con);
 
         });
         worker.start();
@@ -170,9 +157,7 @@ public class PlayerDAO {
             int newRosii = newPlayer.getCartonaseRosii();
             HashMap<String, Integer> newAparitii = newPlayer.getAparitii();
 
-            MongoClient con = DBConnection.openConn();
-            if(con == null) return;
-            MongoDatabase proiect = con.getDatabase("projectDB");
+            MongoDatabase proiect = DBConnection.getDatabase();
             MongoCollection<Document> players = proiect.getCollection("players");
 
             if(!currNume.equals(newNume)) {
@@ -215,9 +200,8 @@ public class PlayerDAO {
      */
     public static synchronized void deleteOne(Player player) {
         worker = new Thread( () -> {
-                MongoClient con = DBConnection.openConn();
-                if(con == null) return;
-                MongoDatabase proiect = con.getDatabase("projectDB");
+
+                MongoDatabase proiect = DBConnection.getDatabase();
                 MongoCollection<Document> players = proiect.getCollection("players");
                 players.deleteOne(
                         Filters.and(
@@ -225,7 +209,6 @@ public class PlayerDAO {
                                 Filters.eq("nrTricou", player.getNumarTricou())
                         )
                 );
-                DBConnection.closeConn(con);
         });
         worker.start();
     }

@@ -31,7 +31,6 @@ public class LogInController {
         Platform.runLater( () -> anchor.requestFocus() );
 
         logIn.setOnMouseEntered(t -> logIn.setStyle("-fx-background-color:#dae7f3;"));
-
         logIn.setOnMouseExited(t -> logIn.setStyle("-fx-background-color:  #78D5D7;"));
 
     }
@@ -61,12 +60,16 @@ public class LogInController {
 
         User curr = UserDAO.findUser(username);
 //        User curr = new User("admin", "admin", true);
+        if(curr == null)
+            return;
 
-        if (curr != null) {
+        if (curr.getUsername().equals("null")) {
             if (curr.checkPassword(pass)) {
                 try {
                     anchor.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("adminWindow.fxml")));
-                } catch (Exception ignored) { }
+                }
+                catch (Exception ignored) { }
+//                finally { System.out.println("done"); }
             } else {
                 errorText.setText("Username or password is wrong.");
                 errorText.setOpacity(1.0);

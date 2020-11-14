@@ -47,15 +47,16 @@ public class UserDAO {
      * @return the user found or null
      */
     public static User findUser(String username) {
-        User userO = null;
+        User userO = new User("null", "null", false);
         MongoDatabase proiect = DBConnection.getDatabase();
+        if(proiect == null)
+            return null;
         MongoCollection<Document> users = proiect.getCollection("users");
 
         try (MongoCursor<Document> cursor = users.find().iterator()) {
             while (cursor.hasNext()) {
                 Document currUser = cursor.next();
                 if(currUser.getString("username").equals(username)) {
-                    userO = new User();
                     userO.setAdmin(currUser.getBoolean("isAdmin"));
                     userO.setUsername(currUser.getString("username"));
                     userO.setEncPassword(currUser.getString("password"));

@@ -1,5 +1,6 @@
 package com.OlimpiaComarnic.Backend.utils;
 
+import com.OlimpiaComarnic.GUI.GUIRun;
 import com.OlimpiaComarnic.GUI.Popup.Popup1;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -30,8 +31,10 @@ public class DBConnection {
             return con.getDatabase("projectDB");
         }
         catch (MongoConfigurationException ignored) {
+
+            //todo create popup
             try {
-                new Popup1().start(Popup1.returnMainStage());
+                new Popup1().start(GUIRun.currStage);
             } catch (Exception ignored1) { }
         }
         catch (Exception ex) {

@@ -60,15 +60,19 @@ public class LogInController {
 
         User curr = UserDAO.findUser(username);
 //        User curr = new User("admin", "admin", true);
+
         if(curr == null)
             return;
 
-        if (curr.getUsername().equals("null")) {
+        if (!curr.getUsername().equals("null")) {
             if (curr.checkPassword(pass)) {
                 try {
+                    System.out.println("aici");
                     anchor.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("adminWindow.fxml")));
                 }
-                catch (Exception ignored) { }
+                catch (Exception ignored) {
+//                    System.out.println(e);
+                }
 //                finally { System.out.println("done"); }
             } else {
                 errorText.setText("Username or password is wrong.");

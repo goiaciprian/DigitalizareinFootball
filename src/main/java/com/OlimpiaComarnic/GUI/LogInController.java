@@ -5,11 +5,13 @@ import com.OlimpiaComarnic.Backend.entity.User;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 
 public class LogInController {
 
@@ -26,6 +28,14 @@ public class LogInController {
 
     @FXML
     public void initialize() {
+        GUIRun.currStage.setMinWidth(200);
+        GUIRun.currStage.setMinHeight(200);
+        GUIRun.currStage.setWidth(608);
+        GUIRun.currStage.setHeight(298);
+        GUIRun.currStage.setResizable(false);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        GUIRun.currStage.setX((screenBounds.getWidth() - GUIRun.currStage.getWidth()) / 2);
+        GUIRun.currStage.setY((screenBounds.getHeight() - GUIRun.currStage.getHeight()) / 2);
 
         // removes default focus on inputs
         Platform.runLater( () -> anchor.requestFocus() );
@@ -33,10 +43,12 @@ public class LogInController {
         logIn.setOnMouseEntered(t -> logIn.setStyle("-fx-background-color:#dae7f3;"));
         logIn.setOnMouseExited(t -> logIn.setStyle("-fx-background-color:  #78D5D7;"));
 
+
     }
 
     public void checkUser() {
 
+        System.out.println(GUIRun.currStage.getX()+"x"+GUIRun.currStage.getY()+"y");
         String username = userName.getText();
         String pass = password.getText();
 
@@ -67,8 +79,10 @@ public class LogInController {
         if (!curr.getUsername().equals("null")) {
             if (curr.checkPassword(pass)) {
                 try {
-                    System.out.println("aici");
-                    anchor.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("adminWindow.fxml")));
+                    if(curr.isAdmin())
+                        anchor.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("adminWindow.fxml")));
+                    else
+                        anchor.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("userWindow.fxml")));
                 }
                 catch (Exception ignored) {
 //                    System.out.println(e);

@@ -29,6 +29,7 @@ public class GUIRun  extends Application {
         primaryStage.getIcons().add(new Image(GUIRun.class.getResourceAsStream("olimpiaCom.png")));
 
         //closes database connection
+        new Thread(DBConnection::getDatabase).start();
         primaryStage.setOnCloseRequest(windowEvent -> DBConnection.closeConn());
         primaryStage.show();
     }

@@ -9,8 +9,7 @@ import javafx.stage.Screen;
 
 import java.util.prefs.Preferences;
 
-public class adminWindowController {
-
+public class userWindowController {
     private static final Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
 
     private static final String WINDOW_POSITION_X = "Window_Position_X";
@@ -60,6 +59,7 @@ public class adminWindowController {
         GUIRun.currStage.setMinHeight(500);
 
         savePrefs();
+
     }
 
     @FXML
@@ -82,5 +82,4 @@ public class adminWindowController {
 
         });
     }
-
 }

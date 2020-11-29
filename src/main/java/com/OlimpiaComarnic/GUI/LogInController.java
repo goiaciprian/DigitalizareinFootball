@@ -48,7 +48,6 @@ public class LogInController {
 
     public void checkUser() {
 
-        System.out.println(GUIRun.currStage.getX()+"x"+GUIRun.currStage.getY()+"y");
         String username = userName.getText();
         String pass = password.getText();
 

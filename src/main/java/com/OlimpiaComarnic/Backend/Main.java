@@ -1,7 +1,7 @@
 package com.OlimpiaComarnic.Backend;
 
 import com.OlimpiaComarnic.Backend.dao.UserDAO;
-import com.OlimpiaComarnic.Backend.entity.User;
+import com.OlimpiaComarnic.Backend.utils.DBConnection;
 
 
 /**
@@ -10,9 +10,8 @@ import com.OlimpiaComarnic.Backend.entity.User;
 public class Main {
     public static void main(String[] args) {
 
-    User normalUser = new User("normalUser", "normalUser", false);
-    UserDAO.insertUser(normalUser);
+        System.out.println(UserDAO.findAll());
 
-
+        DBConnection.closeConn();
     }
 }

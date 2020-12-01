@@ -5,25 +5,37 @@ import java.util.Map;
 
 
 /**
- *  Clasa player contine:
- *      - nume prenume jucator
- *      - numar tricou
- *      - numar cartonase rosii si galbene
- *      - nuamr goluri si pase de gol
- *      - numar paritii (minute pe meci)
+ * Clasa player contine:
+ * - nume prenume jucator
+ * - numar tricou
+ * - numar cartonase rosii si galbene
+ * - nuamr goluri si pase de gol
+ * - numar paritii (minute pe meci)
  */
 public class Player {
 
-    private String nume;
+    private String nume, username;
     private int goluri;
     private int paseGol;
     private int cartonaseRosii, cartonaseGalbene;
     private HashMap<String, Integer> aparitii;
     private int numarTricou;
 
-    public Player(String nume, int numarTricou) {
+    public Player(String nume, String username, int numarTricou) {
         this.nume = nume;
+        this.username = username;
         this.numarTricou = numarTricou;
+        this.goluri = 0;
+        this.paseGol = 0;
+        this.cartonaseGalbene = 0;
+        this.cartonaseRosii = 0;
+        this.aparitii = new HashMap<>();
+    }
+
+    public Player(String username) {
+        this.nume = "null";
+        this.username = username;
+        this.numarTricou = -1;
         this.goluri = 0;
         this.paseGol = 0;
         this.cartonaseGalbene = 0;
@@ -33,6 +45,7 @@ public class Player {
 
     public Player() {
         this.nume = "null";
+        this.username = "null";
         this.numarTricou = -1;
         this.goluri = 0;
         this.paseGol = 0;
@@ -42,7 +55,26 @@ public class Player {
     }
 
     /**
+     * Gets the username associated with the user account
+     *
+     * @return username associated the account
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Sets associated username to player account
+     *
+     * @param username associate username
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
      * Adauga la totalul de goluri
+     *
      * @param goluri nr gouri date
      */
     public void setGoluri(int goluri) {
@@ -208,11 +240,12 @@ public class Player {
 
         StringBuilder apar = new StringBuilder();
         for(Map.Entry<String, Integer> kv: aparitii.entrySet()) {
-            apar.append(" ").append(kv.getKey()).append(" ").append(kv.getValue()).append(" ");
+            apar.append(" ").append(kv.getKey()).append(" - ").append(kv.getValue()).append(" ");
         }
 
         return "Player{" +
                 "nume='" + nume + '\'' +
+                ", username='" + username + '\'' +
                 ", goluri=" + goluri +
                 ", paseGol=" + paseGol +
                 ", cartonaseRosii=" + cartonaseRosii +

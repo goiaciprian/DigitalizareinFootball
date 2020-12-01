@@ -17,7 +17,7 @@ public class SaveWindowPosition {
     public final double DEFAULT_X = (primScreenBounds.getWidth() - GUIRun.currStage.getWidth()) / 2;
     public final double DEFAULT_Y = (primScreenBounds.getHeight() - GUIRun.currStage.getHeight()) / 2;
     public final double DEFAULT_WIDTH = 900;
-    public final double DEFAULT_HEIGHT = 500;
+    public final double DEFAULT_HEIGHT = 515;
     public final boolean DEFAULT_MAXIMIZED = false;
     public String node_name;
     public Preferences pref;
@@ -43,7 +43,7 @@ public class SaveWindowPosition {
         return pref.getDouble(WINDOW_HEIGHT, DEFAULT_HEIGHT);
     }
 
-    public boolean isFullscreen() {
+    public boolean isMaximized() {
         return pref.getBoolean(IS_MAXIMIZED, DEFAULT_MAXIMIZED);
     }
 
@@ -59,13 +59,10 @@ public class SaveWindowPosition {
     public void defaultSetting() {
         GUIRun.currStage.setResizable(true);
 
-        // prevent from resizing
-        GUIRun.currStage.setMinWidth(900);
-        GUIRun.currStage.setMinHeight(500);
-
-        if (isFullscreen()) {
+        if (isMaximized()) {
             GUIRun.currStage.setMaximized(true);
         } else {
+            System.out.println("in else");
             // resize the window to saved size
             GUIRun.currStage.setWidth(getWidth());
             GUIRun.currStage.setHeight(getHeight());
@@ -74,6 +71,10 @@ public class SaveWindowPosition {
             GUIRun.currStage.setX(getX());
             GUIRun.currStage.setY(getY());
         }
+
+        // prevent from resizing
+        GUIRun.currStage.setMinWidth(900);
+        GUIRun.currStage.setMinHeight(500);
 
     }
 

@@ -1,6 +1,8 @@
 package com.OlimpiaComarnic.GUI;
 
+import com.OlimpiaComarnic.Backend.dao.PlayerDAO;
 import com.OlimpiaComarnic.Backend.dao.UserDAO;
+import com.OlimpiaComarnic.Backend.entity.Player;
 import com.OlimpiaComarnic.Backend.entity.User;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -13,7 +15,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 
+import java.util.concurrent.CompletableFuture;
+
 public class LogInController {
+
+    private final Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+    volatile public static Player loggedIn;
 
     @FXML
     AnchorPane anchor;
@@ -28,21 +35,21 @@ public class LogInController {
 
     @FXML
     public void initialize() {
+        GUIRun.currStage.setMaximized(false);
+        GUIRun.currStage.setResizable(false);
         GUIRun.currStage.setMinWidth(200);
         GUIRun.currStage.setMinHeight(200);
         GUIRun.currStage.setWidth(608);
         GUIRun.currStage.setHeight(298);
-        GUIRun.currStage.setResizable(false);
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
         GUIRun.currStage.setX((screenBounds.getWidth() - GUIRun.currStage.getWidth()) / 2);
         GUIRun.currStage.setY((screenBounds.getHeight() - GUIRun.currStage.getHeight()) / 2);
 
         // removes default focus on inputs
-        Platform.runLater( () -> anchor.requestFocus() );
+        Platform.runLater(() -> anchor.requestFocus());
 
         logIn.setOnMouseEntered(t -> logIn.setStyle("-fx-background-color:#dae7f3;"));
         logIn.setOnMouseExited(t -> logIn.setStyle("-fx-background-color:  #78D5D7;"));
-
 
     }
 
@@ -58,12 +65,11 @@ public class LogInController {
             errorText.setOpacity(1.0);
             return;
         }
-        else if(username.equals("")) {
+        else if (username.equals("")) {
             errorText.setText("Username cannot be empty.");
             errorText.setOpacity(1.0);
             return;
-        }
-        else if(pass.equals("")) {
+        } else if (pass.equals("")) {
             errorText.setText("Password cannot be empty.");
             errorText.setOpacity(1.0);
             return;
@@ -72,21 +78,22 @@ public class LogInController {
         User curr = UserDAO.findUser(username);
 //        User curr = new User("admin", "admin", true);
 
-        if(curr == null)
-            return;
+        CompletableFuture.runAsync(() -> {
+            if (curr != null) {
+                loggedIn = PlayerDAO.findOneByUsername(username);
+            }
+        });
 
-        if (!curr.getUsername().equals("null")) {
+        if (curr != null) {
             if (curr.checkPassword(pass)) {
                 try {
-                    if(curr.isAdmin())
+                    if (curr.isAdmin())
                         anchor.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("adminWindow.fxml")));
-                    else
+                    else {
                         anchor.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("userWindow.fxml")));
+                    }
+                } catch (Exception ignored) {
                 }
-                catch (Exception ignored) {
-//                    System.out.println(e);
-                }
-//                finally { System.out.println("done"); }
             } else {
                 errorText.setText("Username or password is wrong.");
                 errorText.setOpacity(1.0);

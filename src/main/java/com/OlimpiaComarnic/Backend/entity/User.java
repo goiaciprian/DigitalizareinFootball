@@ -39,7 +39,9 @@ public class User {
         this.encPassword = encPassword;
     }
 
-    public void newPassowrd(String password) {this.encPassword = hashPass(password); }
+    public void newPassword(String password) {
+        this.encPassword = hashPass(password);
+    }
 
     public boolean isAdmin() {
         return isAdmin;

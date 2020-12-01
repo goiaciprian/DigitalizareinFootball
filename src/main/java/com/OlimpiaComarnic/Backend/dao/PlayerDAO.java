@@ -33,6 +33,7 @@ public class PlayerDAO {
             while (cursor.hasNext()) {
                 Document currPlayer = cursor.next();
                 Player player = new Player();
+                player.setUsername(currPlayer.getString("username"));
                 player.setNume(currPlayer.getString("nume"));
                 player.setNumarTricou(currPlayer.getInteger("nrTricou"));
                 player.setGoluri(currPlayer.getInteger("goluri"));
@@ -70,7 +71,7 @@ public class PlayerDAO {
                 Document currPlayer = cursor.next();
                 String currPlayerName = currPlayer.getString("nume");
                 if(currPlayerName.equals(playerName)) {
-                    player = new Player(currPlayerName, currPlayer.getInteger("nrTricou"));
+                    player = new Player(currPlayerName, currPlayer.getString("username"), currPlayer.getInteger("nrTricou"));
                     player.setCartonaseGalbene(currPlayer.getInteger("cartonaseGalbene"));
                     player.setCartonaseRosii(currPlayer.getInteger("cartonaseRosii"));
                     player.setGoluri(currPlayer.getInteger("goluri"));
@@ -82,7 +83,6 @@ public class PlayerDAO {
                             player.addAparitie((Integer) KeyValAparitii.getValue(), KeyValAparitii.getKey());
                         }
                     }
-                    break;
                 }
             }
         } catch (Exception ignored) {
@@ -92,15 +92,52 @@ public class PlayerDAO {
     }
 
     /**
+     * Finds an player by it's associated username
+     *
+     * @param username associated with user account
+     * @return user if found else null
+     */
+    public static Player findOneByUsername(String username) {
+        Player player = null;
+        MongoDatabase proiect = DBConnection.getDatabase();
+        MongoCollection<Document> players = proiect.getCollection("players");
+
+        try (MongoCursor<Document> cursor = players.find().iterator()) {
+            while (cursor.hasNext()) {
+                Document currPlayer = cursor.next();
+                String currPlayerUsername = currPlayer.getString("username");
+                if (currPlayerUsername.equals(username)) {
+                    player = new Player(currPlayer.getString("nume"), currPlayerUsername, currPlayer.getInteger("nrTricou"));
+                    player.setCartonaseGalbene(currPlayer.getInteger("cartonaseGalbene"));
+                    player.setCartonaseRosii(currPlayer.getInteger("cartonaseRosii"));
+                    player.setGoluri(currPlayer.getInteger("goluri"));
+                    player.setPaseGol(currPlayer.getInteger("paseDeGol"));
+
+                    List<Document> aparitiiDB = currPlayer.getList("aparitii", Document.class);
+                    for (Document doc : aparitiiDB) {
+                        for (Map.Entry<String, Object> KeyValAparitii : doc.entrySet()) {
+                            player.addAparitie((Integer) KeyValAparitii.getValue(), KeyValAparitii.getKey());
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return player;
+    }
+
+    /**
      * Add a new player in database
+     *
      * @param player new player to add in database
      */
     public static synchronized void insertPlayer(Player player) {
 
-        worker = new Thread( () -> {
+        worker = new Thread(() -> {
 
             try {
-                assert findOne(player.getNume()) == null: "Player already in database";
+                assert findOne(player.getNume()) == null : "Player already in database";
             } catch (AssertionError err) {
                 System.err.println(err.getMessage());
                 return;
@@ -119,6 +156,7 @@ public class PlayerDAO {
 
             Document playerDB = new Document()
                     .append("nume", player.getNume())
+                    .append("username", player.getUsername())
                     .append("nrTricou", player.getNumarTricou())
                     .append("goluri", player.getGoluri())
                     .append("paseDeGol", player.getPaseGol())
@@ -134,7 +172,7 @@ public class PlayerDAO {
 
     /**
      * Update method replace in the old player the new values and puts then in db
-     * @param currPlayer current player
+     //      @param currPlayer current player
      * @param newPlayer updated player
      */
     public static synchronized void updateOne(Player currPlayer, Player newPlayer) {
@@ -142,6 +180,7 @@ public class PlayerDAO {
         worker = new Thread( () -> {
 
             String currNume = currPlayer.getNume();
+            String currUsername = currPlayer.getUsername();
             int currNrTricou = currPlayer.getNumarTricou();
             int currNrPase = currPlayer.getNumarTricou();
             int currGoluri = currPlayer.getGoluri();
@@ -150,6 +189,7 @@ public class PlayerDAO {
             HashMap<String, Integer> currAparitii = currPlayer.getAparitii();
 
             String newNume = newPlayer.getNume();
+            String newUsername = newPlayer.getUsername();
             int newNrTricou = newPlayer.getNumarTricou();
             int newNrPase = newPlayer.getNumarTricou();
             int newGoluri = newPlayer.getGoluri();
@@ -160,22 +200,25 @@ public class PlayerDAO {
             MongoDatabase proiect = DBConnection.getDatabase();
             MongoCollection<Document> players = proiect.getCollection("players");
 
-            if(!currNume.equals(newNume)) {
+            if (!currNume.equals(newNume)) {
                 players.updateOne(Filters.eq("nume", currNume), Updates.set("nume", newNume));
             }
-            if(currNrTricou != newNrTricou) {
+            if (!currUsername.equals(newUsername)) {
+                players.updateOne(Filters.eq("username", currUsername), Updates.set("username", newUsername));
+            }
+            if (currNrTricou != newNrTricou) {
                 players.updateOne(Filters.eq("nrTricou", currNrTricou), Updates.set("nrTricou", newNrTricou));
             }
-            if(currNrPase !=  newNrPase) {
+            if (currNrPase != newNrPase) {
                 players.updateOne(Filters.eq("paseDeGol", currNrPase), Updates.set("paseDeGol", newNrPase));
             }
-            if(currGoluri != newGoluri) {
+            if (currGoluri != newGoluri) {
                 players.updateOne(Filters.eq("goluri", currGoluri), Updates.set("goluri", newGoluri));
             }
-            if(currGalbene != newGalbene) {
+            if (currGalbene != newGalbene) {
                 players.updateOne(Filters.eq("cartonaseGalbene", currGalbene), Updates.set("cartonaseGalbene", newGalbene));
             }
-            if(currRosii != newRosii) {
+            if (currRosii != newRosii) {
                 players.updateOne(Filters.eq("cartonaseRosii", currRosii), Updates.set("cartonaseRosii", newRosii));
             }
             if(!currAparitii.equals(newAparitii)) {

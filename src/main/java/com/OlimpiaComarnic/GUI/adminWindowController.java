@@ -20,7 +20,6 @@ public class adminWindowController {
     @FXML
     void initialize() {
         position.defaultSetting();
-        GUIRun.currStage.setOnCloseRequest(windowEvent -> position.updatePref());
     }
 
     @FXML

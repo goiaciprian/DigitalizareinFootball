@@ -31,7 +31,7 @@ public class GUIRun extends Application {
         primaryStage.getIcons().add(new Image(GUIRun.class.getResourceAsStream("olimpiaCom.png")));
 
         //opens database connection
-        CompletableFuture.runAsync(DBConnection::getDatabase);
+        CompletableFuture.runAsync(DBConnection::createConn);
         //add closing event listener to close database connection
         primaryStage.setOnCloseRequest(windowEvent -> CompletableFuture.runAsync(DBConnection::closeConn));
         primaryStage.show();

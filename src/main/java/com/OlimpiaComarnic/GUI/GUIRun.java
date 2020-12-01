@@ -8,7 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class GUIRun  extends Application {
+import java.util.concurrent.CompletableFuture;
+
+public class GUIRun extends Application {
 
     public static Stage currStage;
 
@@ -28,8 +30,10 @@ public class GUIRun  extends Application {
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(GUIRun.class.getResourceAsStream("olimpiaCom.png")));
 
-        //closes database connection
-        primaryStage.setOnCloseRequest(windowEvent -> DBConnection.closeConn());
+        //opens database connection
+        CompletableFuture.runAsync(DBConnection::createConn);
+        //add closing event listener to close database connection
+        primaryStage.setOnCloseRequest(windowEvent -> CompletableFuture.runAsync(DBConnection::closeConn));
         primaryStage.show();
     }
 }

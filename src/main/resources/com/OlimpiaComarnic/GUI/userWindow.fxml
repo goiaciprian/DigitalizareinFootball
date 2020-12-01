@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.*?>
+<AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="900.0" prefHeight="500.0" prefWidth="900.0" styleClass="anchorMain" stylesheets="@userWindow.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.OlimpiaComarnic.GUI.userWindowController">
+   <children>
+      <Label fx:id="paseDeGol" layoutX="227.0" layoutY="145.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Label layoutX="112.0" layoutY="4.0" text="Buna ziua,">
+         <font>
+            <Font name="Arial Bold" size="36.0"/>
+         </font>
+      </Label>
+      <Button fx:id="logOutButt" layoutX="419.0" layoutY="427.0" mnemonicParsing="false" onAction="#logOut"
+              styleClass="logInButt" stylesheets="@logIn.css" text="Log out"/>
+      <Label contentDisplay="CENTER" layoutX="112.0" layoutY="55.0" prefHeight="30.0" prefWidth="71.0" text="Nume:"
+             textAlignment="RIGHT">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Label contentDisplay="CENTER" layoutX="112.0" layoutY="85.0" prefHeight="30.0" prefWidth="130.0"
+             text="Numar tricou: " textAlignment="JUSTIFY">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Label contentDisplay="CENTER" layoutX="112.0" layoutY="115.0" prefHeight="30.0" prefWidth="71.0" text="Goluri:">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Label contentDisplay="CENTER" layoutX="112.0" layoutY="145.0" prefHeight="30.0" prefWidth="115.0"
+             text="Pase goluri:">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Label layoutX="112.0" layoutY="205.0" prefHeight="30.0" prefWidth="175.0" text="Cartonase galbene:">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Label contentDisplay="CENTER" layoutX="112.0" layoutY="175.0" prefHeight="30.0" prefWidth="175.0"
+             text="Cartonase rosii:">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="108.0" layoutY="235.0" prefHeight="30.0" prefWidth="79.0" text="Aparitii:">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <VBox fx:id="aparitii" layoutX="113.0" layoutY="267.0" prefHeight="167.0" prefWidth="182.0"/>
+      <Label fx:id="helloText" layoutX="309.0" prefHeight="51.0" prefWidth="224.0" text="TEST">
+         <font>
+            <Font size="35.0"/>
+         </font>
+      </Label>
+      <Label fx:id="nume" layoutX="180.0" layoutY="55.0" prefHeight="30.0" prefWidth="175.0" text="TEST">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Label fx:id="nrTricou" layoutX="242.0" layoutY="85.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Label fx:id="goluri" layoutX="180.0" layoutY="115.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Label fx:id="cartGalben" layoutX="257.0" layoutY="175.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Label fx:id="cartRosii" layoutX="287.0" layoutY="205.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

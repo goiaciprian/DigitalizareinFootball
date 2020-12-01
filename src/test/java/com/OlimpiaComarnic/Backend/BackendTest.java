@@ -46,8 +46,8 @@ public class BackendTest {
      */
     @Test
     public void insertUpdateDeleteOne() throws Exception {
-        Player newPl = new Player("junitTest", 1000),
-            updatePl = new Player("junitTest", 2000);
+        Player newPl = new Player("junitTest", "junitUsername", 1000),
+                updatePl = new Player("junitTest", "jUnitUsername", 2000);
 
         PlayerDAO.insertPlayer(newPl);
         PlayerDAO.worker.join();

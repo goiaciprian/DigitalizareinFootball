@@ -1,29 +1,33 @@
 package com.OlimpiaComarnic.Backend;
 
-import com.OlimpiaComarnic.Backend.dao.PlayerDAO;
-import com.OlimpiaComarnic.Backend.entity.Player;
+import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
+import com.OlimpiaComarnic.Backend.entity.Eveniment;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
+
+import java.text.ParseException;
+import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 
 /**
  * Clasa main pentru teste in backend
  */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException, InterruptedException, ExecutionException {
 
-        Player pl = PlayerDAO.findOneByUsername("user");
-        Player pl2 = PlayerDAO.findOneByUsername("user");
-
-//        pl.addAparitie(44, "meci4");
-//        pl.addAparitie(99, "meci5");
-//        pl.addAparitie(64, "meci6");
-//        pl.addAparitie(91, "meci7");
-//        pl.addAparitie(88, "meci8");
-//        pl.addAparitie(90, "meci9");
-//        pl.addAparitie(55, "meci10");
+//        Eveniment ad = EvenimentDAO.findAll().get(0);
+//        System.out.println(ad);
+//        try {
+//            Date a = ad.getDate();
+//            Date curr = new Date();
+//            System.out.println(a);
+//            System.out.println(curr);
 //
-//        PlayerDAO.updateOne(pl2, pl);
-
+//            System.out.println(curr.compareTo(a));
+//        } catch (Exception e) {
+//            throw e;
+//        }
+        EvenimentDAO.updateEventById("5fc7fbef2a8b293a227f5903", new Eveniment("asdsad", new Date())).get();
         DBConnection.closeConn();
     }
 }

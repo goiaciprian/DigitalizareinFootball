@@ -102,8 +102,6 @@ public class LogInController {
             errorText.setText("Username or password is wrong.");
             errorText.setOpacity(1.0);
         }
-
-
     }
 
 }

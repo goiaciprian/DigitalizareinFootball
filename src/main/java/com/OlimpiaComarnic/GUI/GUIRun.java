@@ -25,7 +25,6 @@ public class GUIRun extends Application {
         Parent parent = FXMLLoader.load(GUIRun.class.getResource("LogIn.fxml"));
         Scene scene = new Scene(parent);
 
-        primaryStage.setResizable(false);
         primaryStage.setTitle("Olimpia Comarnic Manager");
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(GUIRun.class.getResourceAsStream("olimpiaCom.png")));

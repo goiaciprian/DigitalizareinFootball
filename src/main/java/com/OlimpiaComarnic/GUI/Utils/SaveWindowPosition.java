@@ -62,7 +62,6 @@ public class SaveWindowPosition {
         if (isMaximized()) {
             GUIRun.currStage.setMaximized(true);
         } else {
-            System.out.println("in else");
             // resize the window to saved size
             GUIRun.currStage.setWidth(getWidth());
             GUIRun.currStage.setHeight(getHeight());

@@ -2,16 +2,16 @@ package com.OlimpiaComarnic.GUI;
 
 import com.OlimpiaComarnic.Backend.entity.Player;
 import com.OlimpiaComarnic.GUI.Utils.SaveWindowPosition;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 
 import java.util.Map;
 
@@ -33,13 +33,19 @@ public class userWindowController {
     Label nume, nrTricou, goluri, paseDeGol, cartGalben, cartRosii;
 
     @FXML
-    VBox aparitii;
+    BarChart<String, Number> aparitiiChart;
+
+    @FXML
+    CategoryAxis xAxisNume;
+
+    @FXML
+    NumberAxis yAxisMinute;
 
     @FXML
     void initialize() {
         position.defaultSetting();
-        initAparitii();
         initUI();
+        initChart();
     }
 
     @FXML
@@ -51,15 +57,6 @@ public class userWindowController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    private void initAparitii() {
-        ObservableList<String> data = FXCollections.observableArrayList();
-        for (Map.Entry<String, Integer> aparitie : LogInController.loggedIn.getAparitii().entrySet())
-            data.add(aparitie.getKey() + " - " + aparitie.getValue());
-        ListView<String> list = new ListView<>(data);
-        list.setFocusTraversable(false);
-        aparitii.getChildren().add(list);
     }
 
     private void initUI() {
@@ -78,6 +75,18 @@ public class userWindowController {
         cartGalben.setMinWidth(Region.USE_PREF_SIZE);
         cartRosii.setText(String.valueOf(loggedIn.getCartonaseRosii()));
         cartRosii.setMinWidth(Region.USE_PREF_SIZE);
+    }
+
+    private void initChart() {
+        Player loggedIn = LogInController.loggedIn;
+        xAxisNume.setLabel("Meciuri");
+        yAxisMinute.setLabel("Minute");
+        XYChart.Series<String, Number> s1 = new XYChart.Series<>();
+        for (Map.Entry<String, Integer> e : loggedIn.getAparitii().entrySet()) {
+            s1.getData().add(new XYChart.Data<>(e.getKey(), e.getValue()));
+        }
+        aparitiiChart.getData().add(s1);
+        aparitiiChart.setLegendVisible(false);
     }
 
 }

@@ -1,7 +1,9 @@
 package com.OlimpiaComarnic.Backend;
 
+import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
 import com.OlimpiaComarnic.Backend.dao.PlayerDAO;
 import com.OlimpiaComarnic.Backend.dao.UserDAO;
+import com.OlimpiaComarnic.Backend.entity.Eveniment;
 import com.OlimpiaComarnic.Backend.entity.Player;
 import com.OlimpiaComarnic.Backend.entity.User;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
@@ -12,7 +14,9 @@ import org.bson.Document;
 import org.junit.AfterClass;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.*;
 
@@ -23,13 +27,55 @@ public class BackendTest {
 
 
     /**
-     *  Players test
-     *  Tests if findOne and findAll are working.
+     * Checks if findAll and find One for events is working
+     */
+    @Test
+    public void findAllEvents() {
+        List<Eveniment> all = EvenimentDAO.findAll();
+        int size = all.size() - 1;
+
+        Eveniment expected = all.get(size);
+        Eveniment actual = EvenimentDAO.findOneById(expected.get_id());
+
+        assert actual != null : "findOneEvent returned null";
+        assertEquals(expected.toString(), actual.toString());
+    }
+
+    @Test
+    public void insertUpdateDeleteEvent() throws ExecutionException, InterruptedException {
+
+        Eveniment newEvent = new Eveniment("jUnitE", new Date());
+        EvenimentDAO.insertNewEvent(newEvent).get();
+        List<Eveniment> all = EvenimentDAO.findAll();
+
+        boolean success = false;
+        for (Eveniment e : all) {
+            if (e.getEvent().equals(newEvent.getEvent())) {
+                newEvent.set_id(e.get_id());
+                success = true;
+            }
+        }
+
+        assertTrue(success);
+
+        EvenimentDAO.updateEventById(newEvent.get_id(), new Eveniment("jUnitE2", new Date())).get();
+
+        assertEquals("jUnitE2", EvenimentDAO.findOneById(newEvent.get_id()).getEvent());
+
+        EvenimentDAO.deleteEventById(newEvent.get_id()).get();
+
+        assertNull(EvenimentDAO.findOneById(newEvent.get_id()));
+
+    }
+
+    /**
+     * Players test
+     * Tests if findOne and findAll are working.
      */
     @Test
     public void findAllAndOnePlayers() {
         List<Player> all = PlayerDAO.findAll();
-        int allSize = all.size()-1;
+        int allSize = all.size() - 1;
 
         Player expected = all.get(allSize);
         Player actual = PlayerDAO.findOne(all.get(allSize).getNume());

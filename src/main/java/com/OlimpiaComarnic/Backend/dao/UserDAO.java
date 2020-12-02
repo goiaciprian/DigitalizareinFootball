@@ -123,11 +123,12 @@ public class UserDAO {
 
     /**
      * Deletes an user from database
+     *
      * @param user the user that needs to be deleted
      */
-    public static synchronized void deleteUser(User user) {
-        worker = new Thread( () -> {
-            if(findUser(user.getUsername()) == null)
+    public static void deleteUser(User user) {
+        worker = new Thread(() -> {
+            if (findUser(user.getUsername()) == null)
                 return;
 
             MongoDatabase proiect = DBConnection.getDatabase();

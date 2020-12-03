@@ -1,5 +1,5 @@
 {
-  "script": {
+  "scripts": {
     "start": "node nodeStartServer.js"
   },
   "dependencies": {

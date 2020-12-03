@@ -1,5 +1,11 @@
 package com.OlimpiaComarnic.Backend;
 
+import com.OlimpiaComarnic.Backend.dao.PlayerDAO;
+import com.OlimpiaComarnic.Backend.dao.UserDAO;
+import com.OlimpiaComarnic.Backend.entity.Player;
+import com.OlimpiaComarnic.Backend.entity.User;
+import com.OlimpiaComarnic.Backend.utils.DBConnection;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,9 +19,10 @@ public class Main {
     public static void main(String[] args) throws ParseException, InterruptedException, ExecutionException {
 
 
-        Date a = new Date();
-        SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm");
-        System.out.println(SimpleDateFormat.format(a));
-//        DBConnection.closeConn();
+        PlayerDAO.insertPlayer(new Player("Dany", "dany123", 11));
+        PlayerDAO.worker.join();
+        UserDAO.insertUser(new User("dany123", "dany123", false));
+        UserDAO.worker.join();
+        DBConnection.closeConn();
     }
 }

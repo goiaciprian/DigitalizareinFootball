@@ -1,1 +1,0 @@
-moduleSearchIndex = [{"l":"com.OlimpiaComarnic.GUI"}]

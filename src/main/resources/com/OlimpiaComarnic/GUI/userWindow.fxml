@@ -8,104 +8,104 @@
 <?import javafx.scene.text.*?>
 <AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="900.0" prefHeight="500.0" prefWidth="900.0" styleClass="anchorMain" stylesheets="@userWindow.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.OlimpiaComarnic.GUI.userWindowController">
    <children>
-      <Label fx:id="paseDeGol" layoutX="195.0" layoutY="178.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
+       <Label fx:id="paseDeGol" layoutX="195.0" layoutY="178.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
+           <font>
+               <Font size="20.0"/>
+           </font>
+       </Label>
+       <Label layoutX="78.0" layoutY="30.0" text="Buna ziua,">
+           <font>
+               <Font name="Arial Bold" size="36.0"/>
+           </font>
+       </Label>
+       <Button fx:id="logOutButt" layoutX="419.0" layoutY="427.0" mnemonicParsing="false" onAction="#logOut"
+               styleClass="logInButt" stylesheets="@logIn.css" text="Log out"/>
+       <Label contentDisplay="CENTER" layoutX="80.0" layoutY="88.0" prefHeight="30.0" prefWidth="71.0" text="Nume:"
+              textAlignment="RIGHT">
+           <font>
+               <Font size="20.0"/>
+           </font>
+       </Label>
+       <Label contentDisplay="CENTER" layoutX="80.0" layoutY="118.0" prefHeight="30.0" prefWidth="130.0"
+              text="Numar tricou: " textAlignment="JUSTIFY">
+           <font>
+               <Font size="20.0"/>
+           </font>
+       </Label>
+       <Label contentDisplay="CENTER" layoutX="80.0" layoutY="148.0" prefHeight="30.0" prefWidth="71.0" text="Goluri:">
          <font>
-            <Font size="20.0"/>
+             <Font size="20.0"/>
          </font>
       </Label>
-      <Label layoutX="78.0" layoutY="30.0" text="Buna ziua,">
-         <font>
-            <Font name="Arial Bold" size="36.0"/>
-         </font>
-      </Label>
-      <Button fx:id="logOutButt" layoutX="419.0" layoutY="427.0" mnemonicParsing="false" onAction="#logOut"
-              styleClass="logInButt" stylesheets="@logIn.css" text="Log out"/>
-      <Label contentDisplay="CENTER" layoutX="80.0" layoutY="88.0" prefHeight="30.0" prefWidth="71.0" text="Nume:"
-             textAlignment="RIGHT">
-         <font>
-            <Font size="20.0"/>
-         </font>
-      </Label>
-      <Label contentDisplay="CENTER" layoutX="80.0" layoutY="118.0" prefHeight="30.0" prefWidth="130.0"
-             text="Numar tricou: " textAlignment="JUSTIFY">
-         <font>
-            <Font size="20.0"/>
-         </font>
-      </Label>
-      <Label contentDisplay="CENTER" layoutX="80.0" layoutY="148.0" prefHeight="30.0" prefWidth="71.0" text="Goluri:">
-         <font>
-            <Font size="20.0"/>
-         </font>
-      </Label>
-      <Label contentDisplay="CENTER" layoutX="80.0" layoutY="178.0" prefHeight="30.0" prefWidth="115.0"
-             text="Pase goluri:">
-         <font>
-            <Font size="20.0"/>
-         </font>
-      </Label>
+       <Label contentDisplay="CENTER" layoutX="80.0" layoutY="178.0" prefHeight="30.0" prefWidth="115.0"
+              text="Pase goluri:">
+           <font>
+               <Font size="20.0"/>
+           </font>
+       </Label>
       <Label layoutX="80.0" layoutY="238.0" prefHeight="30.0" prefWidth="175.0" text="Cartonase galbene:">
          <font>
-            <Font size="20.0"/>
+             <Font size="20.0"/>
          </font>
       </Label>
-      <Label contentDisplay="CENTER" layoutX="80.0" layoutY="208.0" prefHeight="30.0" prefWidth="175.0"
-             text="Cartonase rosii:">
-         <font>
-            <Font size="20.0"/>
-         </font>
-      </Label>
-      <Label fx:id="helloText" layoutX="275.0" layoutY="26.0" prefHeight="51.0" prefWidth="224.0" text="TEST">
-         <font>
-            <Font size="35.0"/>
-         </font>
-      </Label>
-      <Label fx:id="nume" layoutX="148.0" layoutY="88.0" prefHeight="30.0" prefWidth="175.0" text="TEST">
-         <font>
-            <Font size="20.0"/>
-         </font>
-      </Label>
+       <Label contentDisplay="CENTER" layoutX="80.0" layoutY="208.0" prefHeight="30.0" prefWidth="175.0"
+              text="Cartonase rosii:">
+           <font>
+               <Font size="20.0"/>
+           </font>
+       </Label>
+       <Label fx:id="helloText" layoutX="275.0" layoutY="26.0" prefHeight="51.0" prefWidth="348.0" text="TEST">
+           <font>
+               <Font size="35.0"/>
+           </font>
+       </Label>
+       <Label fx:id="nume" layoutX="148.0" layoutY="88.0" prefHeight="30.0" prefWidth="255.0" text="TEST">
+           <font>
+               <Font size="20.0"/>
+           </font>
+       </Label>
       <Label fx:id="nrTricou" layoutX="210.0" layoutY="118.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
          <font>
-            <Font size="20.0"/>
+             <Font size="20.0"/>
          </font>
       </Label>
       <Label fx:id="goluri" layoutX="148.0" layoutY="148.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
          <font>
-            <Font size="20.0"/>
+             <Font size="20.0"/>
          </font>
       </Label>
       <Label fx:id="cartGalben" layoutX="225.0" layoutY="208.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
          <font>
-            <Font size="20.0"/>
+             <Font size="20.0"/>
          </font>
       </Label>
       <Label fx:id="cartRosii" layoutX="259.0" layoutY="238.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
          <font>
-            <Font size="20.0"/>
+             <Font size="20.0"/>
          </font>
       </Label>
-      <BarChart fx:id="aparitiiChart" layoutX="469.0" layoutY="26.0" prefHeight="250.0" prefWidth="391.0"
-                stylesheets="@userWindow.css" title="Aparitii">
-         <xAxis>
-            <CategoryAxis side="BOTTOM" fx:id="xAxisNume"/>
-         </xAxis>
-         <yAxis>
-            <NumberAxis fx:id="yAxisMinute" side="LEFT"/>
-         </yAxis>
-      </BarChart>
+       <BarChart fx:id="aparitiiChart" layoutX="482.0" layoutY="83.0" prefHeight="250.0" prefWidth="391.0"
+                 stylesheets="@userWindow.css" title="Aparitii">
+           <xAxis>
+               <CategoryAxis side="BOTTOM" fx:id="xAxisNume"/>
+           </xAxis>
+           <yAxis>
+               <NumberAxis fx:id="yAxisMinute" side="LEFT"/>
+           </yAxis>
+       </BarChart>
       <Label layoutX="78.0" layoutY="306.0" prefHeight="30.0" prefWidth="236.0" text="Urmatorul eveniment:">
          <font>
-            <Font name="System Bold" size="20.0"/>
+             <Font name="System Bold" size="20.0"/>
          </font>
       </Label>
       <Label fx:id="tipEvent" layoutX="78.0" layoutY="336.0" prefHeight="30.0" prefWidth="224.0" text="TEST">
          <font>
-            <Font size="20.0"/>
+             <Font size="20.0"/>
          </font>
       </Label>
       <Label fx:id="dataEvent" layoutX="78.0" layoutY="366.0" prefHeight="30.0" prefWidth="214.0" text="TEST">
          <font>
-            <Font size="20.0"/>
+             <Font size="20.0"/>
          </font>
       </Label>
    </children>

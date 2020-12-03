@@ -122,7 +122,7 @@ public class PlayerDAO {
                 }
             }
         } catch (Exception e) {
-            System.err.println(e);
+            e.printStackTrace();
         }
         return player;
     }

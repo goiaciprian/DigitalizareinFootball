@@ -78,8 +78,8 @@ public class LogInController {
         User curr = UserDAO.findUser(username);
 //        User curr = new User("admin", "admin", true);
 
-        CompletableFuture.runAsync(() -> {
-            if (curr != null) {
+        CompletableFuture getUser = CompletableFuture.runAsync(() -> {
+            if (curr != null && !curr.isAdmin()) {
                 loggedIn = PlayerDAO.findOneByUsername(username);
             }
         });
@@ -87,9 +87,12 @@ public class LogInController {
         if (curr != null) {
             if (curr.checkPassword(pass)) {
                 try {
-                    if (curr.isAdmin())
+                    if (curr.isAdmin()) {
                         anchor.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("adminWindow.fxml")));
-                    else {
+                    } else {
+                        if (!getUser.isDone()) {
+                            getUser.get();
+                        }
                         anchor.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("userWindow.fxml")));
                     }
                 } catch (Exception ignored) {

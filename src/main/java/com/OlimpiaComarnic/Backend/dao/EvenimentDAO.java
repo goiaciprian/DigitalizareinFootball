@@ -44,6 +44,24 @@ public class EvenimentDAO {
         return all;
     }
 
+    public synchronized static Eveniment getNextEvent() {
+        Eveniment found = null;
+
+        MongoDatabase db = DBConnection.getDatabase();
+        MongoCollection<Document> events = db.getCollection("events");
+
+        try (MongoCursor<Document> cursor = events.find(Filters.gt("data", new Date())).iterator()) {
+            while (cursor.hasNext()) {
+                Document curr = cursor.next();
+                found = new Eveniment(curr.get("_id").toString());
+                found.setEvent(curr.getString("event"));
+                found.setDate(curr.getDate("data"));
+            }
+        }
+
+        return found;
+    }
+
     /**
      * Finds event by id
      *
@@ -113,7 +131,7 @@ public class EvenimentDAO {
      * @param id the ObjectId from database
      * @return Awaitable instance
      */
-    public static CompletableFuture deleteEventById(String id) {
+    public synchronized static CompletableFuture deleteEventById(String id) {
         return CompletableFuture.runAsync(() -> {
             MongoDatabase db = DBConnection.getDatabase();
             MongoCollection<Document> events = db.getCollection("events");

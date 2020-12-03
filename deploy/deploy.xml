@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>D:\vsc\javaIDE\DigitalizareinFootball\target\DigitalizareinFootball-1.0-SNAPSHOT-jar-with-dependencies.jar</jar>
+  <jar>D:\vsc\javaIDE\DigitalizareinFootball\target\DigitalizareinFootball-0.8-SNAPSHOT-jar-with-dependencies.jar</jar>
   <outfile>D:\vsc\javaIDE\DigitalizareinFootball\deploy\OlimpiaComarnic.exe</outfile>
   <errTitle>An error has occured.</errTitle>
   <cmdLine></cmdLine>

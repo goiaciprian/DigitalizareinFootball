@@ -1,7 +1,11 @@
 package com.OlimpiaComarnic.GUI;
 
+import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
+import com.OlimpiaComarnic.Backend.dao.PlayerDAO;
+import com.OlimpiaComarnic.Backend.entity.Eveniment;
 import com.OlimpiaComarnic.Backend.entity.Player;
 import com.OlimpiaComarnic.GUI.Utils.SaveWindowPosition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.BarChart;
@@ -13,12 +17,19 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 
+import java.text.SimpleDateFormat;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class userWindowController {
 
     private final SaveWindowPosition position = new SaveWindowPosition("userWindow");
+    public static Timer schedule;
+    Player loggedIn = LogInController.loggedIn;
+    Eveniment next = EvenimentDAO.getNextEvent();
+
 
     @FXML
     AnchorPane anchorPane;
@@ -30,7 +41,7 @@ public class userWindowController {
     Label helloText;
 
     @FXML
-    Label nume, nrTricou, goluri, paseDeGol, cartGalben, cartRosii;
+    Label nume, nrTricou, goluri, paseDeGol, cartGalben, cartRosii, tipEvent, dataEvent;
 
     @FXML
     BarChart<String, Number> aparitiiChart;
@@ -46,11 +57,13 @@ public class userWindowController {
         position.defaultSetting();
         initUI();
         initChart();
+        backgroundUpdate();
     }
 
     @FXML
     public void logOut() {
         try {
+            schedule.cancel();
             LogInController.loggedIn = null;
             position.updatePref();
             anchorPane.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("LogIn.fxml")));
@@ -60,7 +73,7 @@ public class userWindowController {
     }
 
     private void initUI() {
-        Player loggedIn = LogInController.loggedIn;
+
         helloText.setText(loggedIn.getNume());
         helloText.setMinWidth(Region.USE_PREF_SIZE);
         nume.setText(loggedIn.getNume());
@@ -75,6 +88,14 @@ public class userWindowController {
         cartGalben.setMinWidth(Region.USE_PREF_SIZE);
         cartRosii.setText(String.valueOf(loggedIn.getCartonaseRosii()));
         cartRosii.setMinWidth(Region.USE_PREF_SIZE);
+
+        tipEvent.setText(next.getEvent());
+        tipEvent.setMinWidth(Region.USE_PREF_SIZE);
+
+        SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+        dataEvent.setText(SimpleDateFormat.format(next.getDate()));
+        dataEvent.setMinWidth(Region.USE_PREF_SIZE);
+
     }
 
     private void initChart() {
@@ -82,11 +103,36 @@ public class userWindowController {
         xAxisNume.setLabel("Meciuri");
         yAxisMinute.setLabel("Minute");
         XYChart.Series<String, Number> s1 = new XYChart.Series<>();
+        int currNrItems = 0;
+        final int maxNrItems = 10;
         for (Map.Entry<String, Integer> e : loggedIn.getAparitii().entrySet()) {
-            s1.getData().add(new XYChart.Data<>(e.getKey(), e.getValue()));
+            if (currNrItems < maxNrItems) {
+                s1.getData().add(new XYChart.Data<>(e.getKey(), e.getValue()));
+                currNrItems++;
+            }
         }
-        aparitiiChart.getData().add(s1);
+        if (aparitiiChart.getData().isEmpty())
+            aparitiiChart.getData().add(s1);
+        else {
+            aparitiiChart.getData().set(0, s1);
+        }
         aparitiiChart.setLegendVisible(false);
+    }
+
+    private void backgroundUpdate() {
+        schedule = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                loggedIn = PlayerDAO.findOneByUsername(loggedIn.getUsername());
+                next = EvenimentDAO.getNextEvent();
+                Platform.runLater(() -> {
+                    initUI();
+                    initChart();
+                });
+            }
+        };
+        schedule.scheduleAtFixedRate(task, 30 * 1000, 30 * 1000);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.OlimpiaComarnic.GUI;
 
+import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,12 @@ public class GUIRun extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //opens database connection
+        CompletableFuture.runAsync(DBConnection::createConn);
+
+        // Deletes past events;
+        EvenimentDAO.checkPastEvents();
+
         currStage = primaryStage;
 
         Parent parent = FXMLLoader.load(GUIRun.class.getResource("LogIn.fxml"));
@@ -29,10 +36,14 @@ public class GUIRun extends Application {
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(GUIRun.class.getResourceAsStream("olimpiaCom.png")));
 
-        //opens database connection
-        CompletableFuture.runAsync(DBConnection::createConn);
-        //add closing event listener to close database connection
-        primaryStage.setOnCloseRequest(windowEvent -> CompletableFuture.runAsync(DBConnection::closeConn));
+        //add closing event listener to close database connection and to the timer is there is any
+        primaryStage.setOnCloseRequest(windowEvent -> {
+            CompletableFuture.runAsync(DBConnection::closeConn);
+            try {
+                userWindowController.schedule.cancel();
+            } catch (NullPointerException ignored) {
+            }
+        });
         primaryStage.show();
     }
 }

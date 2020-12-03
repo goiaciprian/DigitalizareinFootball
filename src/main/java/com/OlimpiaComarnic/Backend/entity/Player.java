@@ -10,7 +10,7 @@ import java.util.Map;
  * - numar tricou
  * - numar cartonase rosii si galbene
  * - nuamr goluri si pase de gol
- * - numar paritii (minute pe meci)
+ * - numar aparitii (minute pe meci)
  */
 public class Player {
 

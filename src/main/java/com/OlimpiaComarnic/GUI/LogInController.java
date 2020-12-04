@@ -48,9 +48,6 @@ public class LogInController {
         // removes default focus on inputs
         Platform.runLater(() -> anchor.requestFocus());
 
-        logIn.setOnMouseEntered(t -> logIn.setStyle("-fx-background-color:#dae7f3;"));
-        logIn.setOnMouseExited(t -> logIn.setStyle("-fx-background-color:  #78D5D7;"));
-
     }
 
     public void checkUser() {
@@ -76,7 +73,6 @@ public class LogInController {
         }
 
         User curr = UserDAO.findUser(username);
-//        User curr = new User("admin", "admin", true);
 
         CompletableFuture getUser = CompletableFuture.runAsync(() -> {
             if (curr != null && !curr.isAdmin()) {
@@ -95,7 +91,8 @@ public class LogInController {
                         }
                         anchor.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("userWindow.fxml")));
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             } else {
                 errorText.setText("Username or password is wrong.");

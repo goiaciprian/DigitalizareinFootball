@@ -34,8 +34,6 @@ public class DBConnection {
             db = con.getDatabase("projectDB");
             return db;
         } catch (MongoConfigurationException ignored) {
-
-            //todo create popup
             try {
                 new Popup1().start(GUIRun.currStage);
             } catch (Exception ignored1) {
@@ -53,8 +51,6 @@ public class DBConnection {
                 con = new MongoClient(url);
             }
         } catch (MongoConfigurationException ignored) {
-
-            //todo create popup
             try {
                 new Popup1().start(GUIRun.currStage);
             } catch (Exception ignored1) {

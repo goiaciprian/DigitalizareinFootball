@@ -36,11 +36,15 @@ public class GUIRun extends Application {
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(GUIRun.class.getResourceAsStream("olimpiaCom.png")));
 
-        //add closing event listener to close database connection and to the timer is there is any
+        //add closing event listener to close database connection and to the timer if there is any
         primaryStage.setOnCloseRequest(windowEvent -> {
             CompletableFuture.runAsync(DBConnection::closeConn);
             try {
                 userWindowController.schedule.cancel();
+            } catch (NullPointerException ignored) {
+            }
+            try {
+                adminWindowController.schedule.cancel();
             } catch (NullPointerException ignored) {
             }
         });

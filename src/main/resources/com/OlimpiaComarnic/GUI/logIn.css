@@ -1,16 +1,20 @@
 .logInAnchorPane {
-    -fx-background: radial-gradient(center 50% 50% , radius 100% , #ffffff 30%, #00a3c3);
+    -fx-background: radial-gradient(center 50% 50%, radius 100%, #ffffff 30%, #00a3c3);
 }
 
 .logInButt {
+    -fx-border-radius: 5px 5px 5px 5px;
     -fx-border-color: #ACACAC;
-    -fx-background-color:  #78D5D7;
-    -fx-border-radius: 5%;
+    -fx-background-color: #78D5D7;
+}
+
+.logInButt:hover {
+    -fx-background-color: #dae7f3;
 }
 
 .inputs {
     -fx-border-radius: 10%;
     -fx-border-color: black;
-    -fx-focus-color: -fx-control-inner-background ;
-    -fx-faint-focus-color: -fx-control-inner-background ;
+    -fx-focus-color: -fx-control-inner-background;
+    -fx-faint-focus-color: -fx-control-inner-background;
 }

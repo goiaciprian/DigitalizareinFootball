@@ -44,6 +44,12 @@ public class EvenimentDAO {
         return all;
     }
 
+    /**
+     * Finds the next event
+     *
+     * @return Eveniment if found else null;
+     */
+
     public synchronized static Eveniment getNextEvent() {
         Eveniment found = null;
 
@@ -144,11 +150,13 @@ public class EvenimentDAO {
      */
     public static void checkPastEvents() {
         worker = new Thread(() -> {
+            System.out.println("Check started");
             List<Eveniment> allEvents = findAll();
             List<Eveniment> toDelete = allEvents.stream()
                     .filter(event -> new Date().compareTo(event.getDate()) > 0)
                     .collect(Collectors.toList());
             toDelete.forEach(event -> {
+                System.out.println(event);
                 try {
                     deleteEventById(event.get_id()).get();
                 } catch (InterruptedException | ExecutionException e) {

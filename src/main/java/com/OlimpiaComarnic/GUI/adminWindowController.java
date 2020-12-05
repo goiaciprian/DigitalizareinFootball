@@ -4,6 +4,7 @@ import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
 import com.OlimpiaComarnic.Backend.dao.PlayerDAO;
 import com.OlimpiaComarnic.Backend.entity.Eveniment;
 import com.OlimpiaComarnic.Backend.entity.Player;
+import com.OlimpiaComarnic.GUI.Managers.eventsManagerController;
 import com.OlimpiaComarnic.GUI.Utils.SaveWindowPosition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -32,13 +33,13 @@ public class adminWindowController {
     Eveniment next = EvenimentDAO.getNextEvent();
 
     @FXML
-    private AnchorPane anchorPane;
+    AnchorPane anchorPane;
 
     @FXML
-    private Button logOutButt;
+    Button logOutButt, managerEvents, managerJucatori;
 
     @FXML
-    private Label tipEventNext, dataEventNext;
+    Label tipEventNext, dataEventNext;
 
     @FXML
     BarChart<String, Number> goluriChart, paseGolChart, aparitiiChart, cartonaseChart;
@@ -68,7 +69,19 @@ public class adminWindowController {
         }
     }
 
-    private void initUI() {
+    public void eventsManager() {
+        try {
+            new eventsManagerController().start(GUIRun.currStage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playersManager() {
+        System.out.println("Players manager open");
+    }
+
+    public void initUI() {
         if (next != null) {
             tipEventNext.setText(next.getEvent());
             tipEventNext.setMinWidth(Region.USE_PREF_SIZE);
@@ -94,24 +107,18 @@ public class adminWindowController {
         XYChart.Series<String, Number> s4 = new XYChart.Series<>();
         XYChart.Series<String, Number> s5 = new XYChart.Series<>();
 
-        int currNrItems = 0;
         List<Player> players = PlayerDAO.findAll();
-        final int maxNrItems = players.size();
-        for (int i = 0; i < maxNrItems; i++) {
-            if (currNrItems < maxNrItems) {
-                s1.getData().add(new XYChart.Data<>(players.get(i).getNume(), players.get(i).getGoluri()));
-                s2.getData().add(new XYChart.Data<>(players.get(i).getNume(), players.get(i).getPaseGol()));
-                int s = 0;
-                for (Map.Entry<String, Integer> kv : players.get(i).getAparitii().entrySet()) {
-                    s += kv.getValue();
-                }
-                s3.getData().add(new XYChart.Data<>(players.get(i).getNume(), s));
-                s4.setName("Galbene");
-                s5.setName("Rosii");
-                s4.getData().add(new XYChart.Data<>(players.get(i).getNume(), players.get(i).getCartonaseGalbene()));
-                s5.getData().add(new XYChart.Data<>(players.get(i).getNume(), players.get(i).getCartonaseRosii()));
+        for (Player player : players) {
+            s1.getData().add(new XYChart.Data<>(player.getNume(), player.getGoluri()));
+            s2.getData().add(new XYChart.Data<>(player.getNume(), player.getPaseGol()));
+            int s = 0;
+            for (Map.Entry<String, Integer> kv : player.getAparitii().entrySet()) {
+                s += kv.getValue();
             }
-            currNrItems++;
+            s3.getData().add(new XYChart.Data<>(player.getNume(), s));
+            s4.getData().add(new XYChart.Data<>(player.getNume(), player.getCartonaseGalbene()));
+            s5.getData().add(new XYChart.Data<>(player.getNume(), player.getCartonaseRosii()));
+
         }
         if (goluriChart.getData().isEmpty())
             goluriChart.getData().add(s1);

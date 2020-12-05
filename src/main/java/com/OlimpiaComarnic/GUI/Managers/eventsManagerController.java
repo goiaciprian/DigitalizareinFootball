@@ -206,6 +206,6 @@ public class eventsManagerController extends Application {
         };
 
         schedule = new Timer();
-        schedule.scheduleAtFixedRate(update, 15 * 1000, 15 * 1000);
+        schedule.scheduleAtFixedRate(update, 4 * 1000, 4 * 1000);
     }
 }

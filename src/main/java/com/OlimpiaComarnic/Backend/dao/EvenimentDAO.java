@@ -150,7 +150,6 @@ public class EvenimentDAO {
      */
     public static void checkPastEvents() {
         worker = new Thread(() -> {
-            System.out.println("Check started");
             List<Eveniment> allEvents = findAll();
             List<Eveniment> toDelete = allEvents.stream()
                     .filter(event -> new Date().compareTo(event.getDate()) > 0)

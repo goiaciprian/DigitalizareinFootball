@@ -20,10 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 
 public class adminWindowController {
@@ -49,6 +46,7 @@ public class adminWindowController {
 
     @FXML
     NumberAxis yAxisGoluri, yAxisPaseGol, yAxisAparitii, yAxisCartonase;
+
 
     @FXML
     void initialize() {
@@ -123,44 +121,44 @@ public class adminWindowController {
         if (goluriChart.getData().isEmpty())
             goluriChart.getData().add(s1);
         else {
-            if (!aparitiiChart.getData().get(0).toString().equals(s1.toString()))
-                goluriChart.getData().set(0, s1);
+            goluriChart.getData().set(0, s1);
         }
+        goluriChart.setAnimated(false);
         goluriChart.setLegendVisible(false);
 
         if (paseGolChart.getData().isEmpty())
             paseGolChart.getData().add(s2);
         else {
-            if (!aparitiiChart.getData().get(0).toString().equals(s2.toString()))
-                paseGolChart.getData().set(0, s2);
+            paseGolChart.getData().set(0, s2);
         }
+        paseGolChart.setAnimated(false);
         paseGolChart.setLegendVisible(false);
 
         if (aparitiiChart.getData().isEmpty())
             aparitiiChart.getData().add(s3);
         else {
-            if (!aparitiiChart.getData().get(0).toString().equals(s3.toString()))
-                aparitiiChart.getData().set(0, s3);
+            aparitiiChart.getData().set(0, s3);
         }
+        aparitiiChart.setAnimated(false);
         aparitiiChart.setLegendVisible(false);
 
         if (cartonaseChart.getData().isEmpty()) {
             cartonaseChart.getData().add(s4);
             cartonaseChart.getData().add(s5);
         } else {
-            if (!cartonaseChart.getData().get(0).toString().equals(s4.toString()) || !cartonaseChart.getData().get(1).toString().equals(s5.toString())) {
-                cartonaseChart.getData().set(0, s4);
-                cartonaseChart.getData().set(1, s5);
-            }
+            cartonaseChart.getData().set(0, s4);
+            cartonaseChart.getData().set(1, s5);
         }
 
         try {
-            Node n = cartonaseChart.lookup(".default-color0.chart-bar");
-            n.setStyle("-fx-bar-fill: yellow");
+            Set<Node> ns = cartonaseChart.lookupAll(".default-color0.chart-bar");
+            for (Node n : ns)
+                n.setStyle("-fx-bar-fill: yellow");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        cartonaseChart.setAnimated(false);
         cartonaseChart.setLegendVisible(false);
 
     }
@@ -177,7 +175,7 @@ public class adminWindowController {
                 });
             }
         };
-        schedule.scheduleAtFixedRate(task, 15 * 1000, 15 * 1000);
+        schedule.scheduleAtFixedRate(task, 4 * 1000, 4 * 1000);
     }
 
 }

@@ -18,6 +18,7 @@ public class SaveWindowPosition {
     public final double DEFAULT_Y = (primScreenBounds.getHeight() - GUIRun.currStage.getHeight()) / 2;
     public final double DEFAULT_WIDTH = 900;
     public final double DEFAULT_HEIGHT = 515;
+    public final double DEFAULT_WIDTH_ADMIN = 1000;
     public final boolean DEFAULT_MAXIMIZED = false;
     public String node_name;
     public Preferences pref;
@@ -36,6 +37,8 @@ public class SaveWindowPosition {
     }
 
     public double getWidth() {
+        if (node_name.equals("adminWindow"))
+            return pref.getDouble(WINDOW_WIDTH, DEFAULT_WIDTH_ADMIN);
         return pref.getDouble(WINDOW_WIDTH, DEFAULT_WIDTH);
     }
 
@@ -72,8 +75,12 @@ public class SaveWindowPosition {
         }
 
         // prevent from resizing
-        GUIRun.currStage.setMinWidth(900);
-        GUIRun.currStage.setMinHeight(500);
+        if (node_name.equals("adminWindow"))
+            GUIRun.currStage.setMinWidth(1100);
+        else {
+            GUIRun.currStage.setMinWidth(900);
+        }
+        GUIRun.currStage.setMinHeight(515);
 
     }
 

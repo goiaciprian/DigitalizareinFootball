@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.OlimpiaComarnic.GUI</groupId>
     <artifactId>DigitalizareinFootball</artifactId>
-    <version>0.8-SNAPSHOT</version>
+    <version>1.0</version>
     <url>https://github.com/vsDeus/DigitalizareinFootball</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,6 +36,11 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>no.tornado</groupId>
+            <artifactId>tornadofx-controls</artifactId>
+            <version>1.0.6</version>
         </dependency>
 
     </dependencies>

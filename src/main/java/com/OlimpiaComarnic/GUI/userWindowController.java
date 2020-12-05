@@ -89,6 +89,11 @@ public class userWindowController {
         cartRosii.setText(String.valueOf(loggedIn.getCartonaseRosii()));
         cartRosii.setMinWidth(Region.USE_PREF_SIZE);
 
+        if (next == null) {
+            tipEvent.setText("Nu sunt sunt evenimente viitoare");
+            dataEvent.setVisible(false);
+            return;
+        }
         tipEvent.setText(next.getEvent());
         tipEvent.setMinWidth(Region.USE_PREF_SIZE);
 
@@ -114,7 +119,8 @@ public class userWindowController {
         if (aparitiiChart.getData().isEmpty())
             aparitiiChart.getData().add(s1);
         else {
-            aparitiiChart.getData().set(0, s1);
+            if (!aparitiiChart.getData().get(0).toString().equals(s1.toString()))
+                aparitiiChart.getData().set(0, s1);
         }
         aparitiiChart.setLegendVisible(false);
     }
@@ -132,7 +138,7 @@ public class userWindowController {
                 });
             }
         };
-        schedule.scheduleAtFixedRate(task, 30 * 1000, 30 * 1000);
+        schedule.scheduleAtFixedRate(task, 15 * 1000, 15 * 1000);
     }
 
 }

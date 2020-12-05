@@ -19,10 +19,16 @@ _Proiect realizat in cadrul [**Facultatii de Inginerie Electrica si Stiinta Calc
 ## Instalare
 
 1. Instalati [git](https://git-scm.com)
-2. Copiati codul pe masina locala cu comanda: 
+2. Copiati codul pe masina locala cu comanda:
+
 ```
 git clone https://github.com/vsDeus/DigitalizareinFootball.git
 ```
+
 3. Deschideti proiectul cu eclipse sau intellij
-    * Access point pentru gui: GUIRun.java
-    * Access point pentru backend: Main.java
+   * Access point pentru gui: GUIRun.java
+   * Access point pentru backend: Main.java
+
+## Documentatie
+
+Pentru documentatie intrati pe [OlimpiaComarnicDocs on Heroku](https://olimpiacomarnicdocs.herokuapp.com/).

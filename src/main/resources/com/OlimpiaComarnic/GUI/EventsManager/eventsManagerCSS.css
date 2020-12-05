@@ -1,0 +1,10 @@
+.pickerBorders {
+    -fx-border-color: black;
+    -fx-border-radius: 8px 8px 8px 8px;
+    -fx-focus-color: -fx-control-inner-background;
+    -fx-faint-focus-color: -fx-control-inner-background;
+}
+
+.pickerBorders:focused {
+    -fx-background-color: transparent;
+}

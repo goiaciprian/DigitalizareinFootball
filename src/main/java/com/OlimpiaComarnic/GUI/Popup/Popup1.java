@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Popup for network errors.
+ */
 public class Popup1 extends Application{
     @FXML
     Button closeButt;
@@ -32,9 +35,7 @@ public class Popup1 extends Application{
 
     @FXML
     private void closeButtonAction(){
-        // get a handle to the stage
         Stage stage = (Stage) closeButt.getScene().getWindow();
-        // do what you have to do
         stage.close();
     }
 }

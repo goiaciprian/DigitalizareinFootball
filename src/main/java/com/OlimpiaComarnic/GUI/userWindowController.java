@@ -119,9 +119,9 @@ public class userWindowController {
         if (aparitiiChart.getData().isEmpty())
             aparitiiChart.getData().add(s1);
         else {
-            if (!aparitiiChart.getData().get(0).toString().equals(s1.toString()))
-                aparitiiChart.getData().set(0, s1);
+            aparitiiChart.getData().set(0, s1);
         }
+        aparitiiChart.setAnimated(false);
         aparitiiChart.setLegendVisible(false);
     }
 
@@ -138,7 +138,7 @@ public class userWindowController {
                 });
             }
         };
-        schedule.scheduleAtFixedRate(task, 15 * 1000, 15 * 1000);
+        schedule.scheduleAtFixedRate(task, 6 * 1000, 6 * 1000);
     }
 
 }

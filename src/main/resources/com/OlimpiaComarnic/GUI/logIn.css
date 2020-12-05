@@ -13,8 +13,12 @@
 }
 
 .inputs {
-    -fx-border-radius: 10%;
+    -fx-border-radius: 10px 10px 10px 10px;
     -fx-border-color: black;
     -fx-focus-color: -fx-control-inner-background;
     -fx-faint-focus-color: -fx-control-inner-background;
+}
+
+.inputs:focused {
+    -fx-background-color: transparent;
 }

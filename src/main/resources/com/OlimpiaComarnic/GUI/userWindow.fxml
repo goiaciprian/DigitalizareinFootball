@@ -74,16 +74,16 @@
              <Font size="20.0"/>
          </font>
       </Label>
-      <Label fx:id="cartGalben" layoutX="225.0" layoutY="208.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
-         <font>
-             <Font size="20.0"/>
-         </font>
-      </Label>
-      <Label fx:id="cartRosii" layoutX="259.0" layoutY="238.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
-         <font>
-             <Font size="20.0"/>
-         </font>
-      </Label>
+       <Label fx:id="cartGalben" layoutX="259.0" layoutY="238.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
+           <font>
+               <Font size="20.0"/>
+           </font>
+       </Label>
+       <Label fx:id="cartRosii" layoutX="227.0" layoutY="208.0" prefHeight="30.0" prefWidth="48.0" text="TEST">
+           <font>
+               <Font size="20.0"/>
+           </font>
+       </Label>
        <BarChart fx:id="aparitiiChart" layoutX="482.0" layoutY="83.0" prefHeight="250.0" prefWidth="391.0"
                  stylesheets="@userWindow.css" title="Aparitii">
            <xAxis>

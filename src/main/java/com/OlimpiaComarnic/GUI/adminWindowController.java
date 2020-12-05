@@ -4,6 +4,7 @@ import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
 import com.OlimpiaComarnic.Backend.dao.PlayerDAO;
 import com.OlimpiaComarnic.Backend.entity.Eveniment;
 import com.OlimpiaComarnic.Backend.entity.Player;
+import com.OlimpiaComarnic.GUI.Managers.eventsManagerController;
 import com.OlimpiaComarnic.GUI.Utils.SaveWindowPosition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -19,10 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 
 public class adminWindowController {
@@ -32,13 +30,13 @@ public class adminWindowController {
     Eveniment next = EvenimentDAO.getNextEvent();
 
     @FXML
-    private AnchorPane anchorPane;
+    AnchorPane anchorPane;
 
     @FXML
-    private Button logOutButt;
+    Button logOutButt, managerEvents, managerJucatori;
 
     @FXML
-    private Label tipEventNext, dataEventNext;
+    Label tipEventNext, dataEventNext;
 
     @FXML
     BarChart<String, Number> goluriChart, paseGolChart, aparitiiChart, cartonaseChart;
@@ -48,6 +46,7 @@ public class adminWindowController {
 
     @FXML
     NumberAxis yAxisGoluri, yAxisPaseGol, yAxisAparitii, yAxisCartonase;
+
 
     @FXML
     void initialize() {
@@ -68,7 +67,19 @@ public class adminWindowController {
         }
     }
 
-    private void initUI() {
+    public void eventsManager() {
+        try {
+            new eventsManagerController().start(GUIRun.currStage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playersManager() {
+        System.out.println("Players manager open");
+    }
+
+    public void initUI() {
         if (next != null) {
             tipEventNext.setText(next.getEvent());
             tipEventNext.setMinWidth(Region.USE_PREF_SIZE);
@@ -94,66 +105,60 @@ public class adminWindowController {
         XYChart.Series<String, Number> s4 = new XYChart.Series<>();
         XYChart.Series<String, Number> s5 = new XYChart.Series<>();
 
-        int currNrItems = 0;
         List<Player> players = PlayerDAO.findAll();
-        final int maxNrItems = players.size();
-        for (int i = 0; i < maxNrItems; i++) {
-            if (currNrItems < maxNrItems) {
-                s1.getData().add(new XYChart.Data<>(players.get(i).getNume(), players.get(i).getGoluri()));
-                s2.getData().add(new XYChart.Data<>(players.get(i).getNume(), players.get(i).getPaseGol()));
-                int s = 0;
-                for (Map.Entry<String, Integer> kv : players.get(i).getAparitii().entrySet()) {
-                    s += kv.getValue();
-                }
-                s3.getData().add(new XYChart.Data<>(players.get(i).getNume(), s));
-                s4.setName("Galbene");
-                s5.setName("Rosii");
-                s4.getData().add(new XYChart.Data<>(players.get(i).getNume(), players.get(i).getCartonaseGalbene()));
-                s5.getData().add(new XYChart.Data<>(players.get(i).getNume(), players.get(i).getCartonaseRosii()));
+        for (Player player : players) {
+            s1.getData().add(new XYChart.Data<>(player.getNume(), player.getGoluri()));
+            s2.getData().add(new XYChart.Data<>(player.getNume(), player.getPaseGol()));
+            int s = 0;
+            for (Map.Entry<String, Integer> kv : player.getAparitii().entrySet()) {
+                s += kv.getValue();
             }
-            currNrItems++;
+            s3.getData().add(new XYChart.Data<>(player.getNume(), s));
+            s4.getData().add(new XYChart.Data<>(player.getNume(), player.getCartonaseGalbene()));
+            s5.getData().add(new XYChart.Data<>(player.getNume(), player.getCartonaseRosii()));
+
         }
         if (goluriChart.getData().isEmpty())
             goluriChart.getData().add(s1);
         else {
-            if (!aparitiiChart.getData().get(0).toString().equals(s1.toString()))
-                goluriChart.getData().set(0, s1);
+            goluriChart.getData().set(0, s1);
         }
+        goluriChart.setAnimated(false);
         goluriChart.setLegendVisible(false);
 
         if (paseGolChart.getData().isEmpty())
             paseGolChart.getData().add(s2);
         else {
-            if (!aparitiiChart.getData().get(0).toString().equals(s2.toString()))
-                paseGolChart.getData().set(0, s2);
+            paseGolChart.getData().set(0, s2);
         }
+        paseGolChart.setAnimated(false);
         paseGolChart.setLegendVisible(false);
 
         if (aparitiiChart.getData().isEmpty())
             aparitiiChart.getData().add(s3);
         else {
-            if (!aparitiiChart.getData().get(0).toString().equals(s3.toString()))
-                aparitiiChart.getData().set(0, s3);
+            aparitiiChart.getData().set(0, s3);
         }
+        aparitiiChart.setAnimated(false);
         aparitiiChart.setLegendVisible(false);
 
         if (cartonaseChart.getData().isEmpty()) {
             cartonaseChart.getData().add(s4);
             cartonaseChart.getData().add(s5);
         } else {
-            if (!cartonaseChart.getData().get(0).toString().equals(s4.toString()) || !cartonaseChart.getData().get(1).toString().equals(s5.toString())) {
-                cartonaseChart.getData().set(0, s4);
-                cartonaseChart.getData().set(1, s5);
-            }
+            cartonaseChart.getData().set(0, s4);
+            cartonaseChart.getData().set(1, s5);
         }
 
         try {
-            Node n = cartonaseChart.lookup(".default-color0.chart-bar");
-            n.setStyle("-fx-bar-fill: yellow");
+            Set<Node> ns = cartonaseChart.lookupAll(".default-color0.chart-bar");
+            for (Node n : ns)
+                n.setStyle("-fx-bar-fill: yellow");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        cartonaseChart.setAnimated(false);
         cartonaseChart.setLegendVisible(false);
 
     }
@@ -170,7 +175,7 @@ public class adminWindowController {
                 });
             }
         };
-        schedule.scheduleAtFixedRate(task, 15 * 1000, 15 * 1000);
+        schedule.scheduleAtFixedRate(task, 4 * 1000, 4 * 1000);
     }
 
 }

@@ -4,7 +4,13 @@ import org.bson.types.ObjectId;
 
 import java.util.Date;
 
-public class Eveniment {
+/**
+ * Clasa pentru evenimente viitoare:
+ * -_id - id-ul din baza de date;
+ * - event - tipul de eveniment: Meci: Barcelona, Antrenament, Amical: Barcelona
+ * - date - data si ora evenimentului
+ */
+public class Eveniment implements Comparable<Eveniment> {
     private String _id;
     private String event; // antrenament, meci
     private Date date;
@@ -51,5 +57,10 @@ public class Eveniment {
                 "event='" + event + '\'' +
                 ", date=" + date +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Eveniment e) {
+        return getDate().compareTo(e.getDate());
     }
 }

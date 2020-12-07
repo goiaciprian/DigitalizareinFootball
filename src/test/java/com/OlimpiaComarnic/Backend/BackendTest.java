@@ -53,6 +53,7 @@ public class BackendTest {
             if (e.getEvent().equals(newEvent.getEvent())) {
                 newEvent.set_id(e.get_id());
                 success = true;
+                break;
             }
         }
 
@@ -92,19 +93,16 @@ public class BackendTest {
      */
     @Test
     public void insertUpdateDeleteOne() throws Exception {
-        Player newPl = new Player("junitTest", "junitUsername", 1000),
-                updatePl = new Player("junitTest", "jUnitUsername", 2000);
+        Player newPl = new Player("junitTest", "jUnitUsername", 1000),
+                updatePl = new Player("junitTest2", "jUnitUsername", 2000);
 
-        PlayerDAO.insertPlayer(newPl);
-        PlayerDAO.worker.join();
+        PlayerDAO.insertPlayer(newPl).get();
         assertTrue(fastFind(newPl));
 
-        PlayerDAO.updateOne(newPl, updatePl);
-        PlayerDAO.worker.join();
+        PlayerDAO.updateOne(newPl.getUsername(), updatePl).get();
         assertTrue(fastFind(updatePl));
 
-        PlayerDAO.deleteOne(updatePl);
-        PlayerDAO.worker.join();
+        PlayerDAO.deleteOne(updatePl.getUsername()).get();
         assertFalse(fastFind(updatePl));
 
     }
@@ -121,6 +119,7 @@ public class BackendTest {
         User expected = all.get(allSize);
         User actual = UserDAO.findUser(all.get(allSize).getUsername());
 
+        assert actual != null;
         assertEquals(expected.toString(), actual.toString());
 
     }
@@ -135,16 +134,13 @@ public class BackendTest {
         User user1 = new User("test1", "paroa", false),
              user2 = new User("test2", "parola2", false);
 
-        UserDAO.insertUser(user1);
-        UserDAO.worker.join();
+        UserDAO.insertUser(user1).get();
         assertTrue(fastFind(user1));
 
-        UserDAO.updateUser(user1, user2);
-        UserDAO.worker.join();
+        UserDAO.updateUserByUsername(user1.getUsername(), user2).get();
         assertTrue(fastFind(user2));
 
-        UserDAO.deleteUser(user2);
-        UserDAO.worker.join();
+        UserDAO.deleteUser(user2.getUsername()).get();
         assertFalse(fastFind(user2));
 
     }
@@ -180,8 +176,7 @@ public class BackendTest {
                 while (cursor.hasNext()) {
                     Document currUser = cursor.next();
                     String currUsername = currUser.getString("username");
-                    String currPassword = currUser.getString("password");
-                    if(user.getUsername().equals(currUsername) && user.getEncPassword().equals(currPassword))
+                    if (user.getUsername().equals(currUsername))
                         return true;
                 }
             }

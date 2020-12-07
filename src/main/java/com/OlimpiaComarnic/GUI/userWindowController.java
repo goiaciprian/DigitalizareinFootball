@@ -97,7 +97,7 @@ public class userWindowController {
         tipEvent.setText(next.getEvent());
         tipEvent.setMinWidth(Region.USE_PREF_SIZE);
 
-        SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+        SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm a");
         dataEvent.setText(SimpleDateFormat.format(next.getDate()));
         dataEvent.setMinWidth(Region.USE_PREF_SIZE);
 

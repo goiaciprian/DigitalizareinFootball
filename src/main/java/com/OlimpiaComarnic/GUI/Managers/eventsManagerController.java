@@ -54,6 +54,7 @@ public class eventsManagerController extends Application {
             isSelected = null;
             changeView();
             createView.requestFocus();
+            allEvents.getSelectionModel().select(-1);
         });
     }
 
@@ -119,6 +120,7 @@ public class eventsManagerController extends Application {
         ObservableList<Eveniment> labelsEvents = FXCollections.observableArrayList(found);
         allEvents.setItems(labelsEvents);
         allEvents.setFocusTraversable(false);
+        initListView();
     }
 
     private void initListView() {
@@ -143,6 +145,7 @@ public class eventsManagerController extends Application {
 
         allEvents.setOnMouseClicked(e -> {
             isSelected = null;
+            allEvents.getSelectionModel().select(-1);
             changeView();
         });
     }
@@ -201,7 +204,11 @@ public class eventsManagerController extends Application {
         TimerTask update = new TimerTask() {
             @Override
             public void run() {
-                Platform.runLater(() -> getAllEvents());
+                Platform.runLater(() -> {
+                    int focused = allEvents.getSelectionModel().getSelectedIndex();
+                    getAllEvents();
+                    allEvents.getSelectionModel().select(focused);
+                });
             }
         };
 

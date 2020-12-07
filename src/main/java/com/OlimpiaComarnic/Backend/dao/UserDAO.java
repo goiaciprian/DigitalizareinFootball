@@ -6,16 +6,15 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Updates;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 public class UserDAO {
-
-    public static Thread worker;
 
     /**
      * Gets all the user from database
@@ -30,7 +29,7 @@ public class UserDAO {
         try (MongoCursor<Document> cursor = users.find().iterator()) {
             while (cursor.hasNext()) {
                 Document userDB = cursor.next();
-                User user = new User();
+                User user = new User(userDB.get("_id").toString());
                 user.setUsername(userDB.getString("username"));
                 user.setEncPassword(userDB.getString("password"));
                 user.setAdmin(userDB.getBoolean("isAdmin"));
@@ -47,7 +46,7 @@ public class UserDAO {
      * @return the user found or null
      */
     public static User findUser(String username) {
-        User userO = new User("null", "null", false);
+        User userO = null;
         MongoDatabase proiect = DBConnection.getDatabase();
         if(proiect == null)
             return null;
@@ -57,6 +56,7 @@ public class UserDAO {
             while (cursor.hasNext()) {
                 Document currUser = cursor.next();
                 if(currUser.getString("username").equals(username)) {
+                    userO = new User(currUser.get("_id").toString());
                     userO.setAdmin(currUser.getBoolean("isAdmin"));
                     userO.setUsername(currUser.getString("username"));
                     userO.setEncPassword(currUser.getString("password"));
@@ -70,12 +70,14 @@ public class UserDAO {
     }
 
     /**
-     * Add a new user to the database
+     * Add a new user to the database async
+     *
      * @param user new user
+     * @return Awaitable object
      */
-    public synchronized static void insertUser(User user) {
-        worker = new Thread(() -> {
-            if(Objects.equals(findUser(user.getUsername()), user))
+    public synchronized static CompletableFuture<Void> insertUser(User user) {
+        return CompletableFuture.runAsync(() -> {
+            if (Objects.equals(findUser(user.getUsername()), user))
                 return;
             Document userDB = new Document()
                     .append("username", user.getUsername())
@@ -88,61 +90,60 @@ public class UserDAO {
 
 
         });
-        worker.start();
     }
 
     /**
-     *  Updates the a user
-     * @param oldUser old user that needs to be updated
+     * Updates the a user async
+     *
+     * @param user_id old user id that needs to be updated
      * @param newUser new user that will be replaced with
+     * @return Awaitable object
      */
-    public synchronized static void updateUser(User oldUser, User newUser) {
-        worker = new Thread( ()-> {
+    public synchronized static CompletableFuture<Void> updateUserById(String user_id, User newUser) {
+        return CompletableFuture.runAsync(() -> {
 
-            String oldUsername = oldUser.getUsername();
-            String oldEncPass = oldUser.getEncPassword();
-
-            String newUsername = newUser.getUsername();
-            String newEncPass = newUser.getEncPassword();
-
-            if(findUser(oldUsername) == null)
-                return;
+            Document toReplace = new Document()
+                    .append("username", newUser.getUsername())
+                    .append("password", newUser.getEncPassword())
+                    .append("isAdmin", newUser.isAdmin());
 
             MongoDatabase proiect = DBConnection.getDatabase();
             MongoCollection<Document> collection = proiect.getCollection("users");
-            if(!oldUsername.equals(newUsername)) {
-                collection.updateOne(Filters.eq("username", oldUsername), Updates.set("username", newUsername));
-            }
-            if(!oldEncPass.equals(newEncPass)) {
-                collection.updateOne(Filters.eq("password", oldEncPass), Updates.set("password", newEncPass));
-            }
+
+            collection.replaceOne(Filters.eq("_id", new ObjectId(user_id)), toReplace);
 
         });
-        worker.start();
+    }
+
+    public synchronized static CompletableFuture<Void> updateUserByUsername(String username, User newUser) {
+        return CompletableFuture.runAsync(() -> {
+
+            Document toReplace = new Document()
+                    .append("username", newUser.getUsername())
+                    .append("password", newUser.getEncPassword())
+                    .append("isAdmin", newUser.isAdmin());
+
+            MongoDatabase proiect = DBConnection.getDatabase();
+            MongoCollection<Document> collection = proiect.getCollection("users");
+
+            collection.replaceOne(Filters.eq("username", username), toReplace);
+
+        });
     }
 
     /**
      * Deletes an user from database
      *
-     * @param user the user that needs to be deleted
+     * @param username the user username that needs to be deleted
      */
-    public static void deleteUser(User user) {
-        worker = new Thread(() -> {
-            if (findUser(user.getUsername()) == null)
-                return;
+    public static CompletableFuture<Void> deleteUser(String username) {
+        return CompletableFuture.runAsync(() -> {
 
             MongoDatabase proiect = DBConnection.getDatabase();
             MongoCollection<Document> users = proiect.getCollection("users");
 
-            users.deleteOne(
-                    Filters.and(
-                            Filters.eq("username", user.getUsername()),
-                            Filters.eq("password", user.getEncPassword()),
-                            Filters.eq("isAdmin", user.isAdmin())
-                    )
-            );
+            users.deleteOne(Filters.eq("username", username));
         });
-        worker.start();
     }
 
 }

@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 
 
 public class EvenimentDAO {
-    public static Thread worker;
 
     /**
      * Get all events
@@ -63,6 +62,8 @@ public class EvenimentDAO {
                 found.setEvent(curr.getString("event"));
                 found.setDate(curr.getDate("data"));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return found;
@@ -98,7 +99,7 @@ public class EvenimentDAO {
      * @param event future event
      * @return Awaitable instance
      */
-    public synchronized static CompletableFuture insertNewEvent(Eveniment event) {
+    public synchronized static CompletableFuture<Void> insertNewEvent(Eveniment event) {
         return CompletableFuture.runAsync(() -> {
             Document newEvent = new Document()
                     .append("event", event.getEvent())
@@ -118,7 +119,7 @@ public class EvenimentDAO {
      * @param updated the updated event
      * @return Awaitable instance
      */
-    public synchronized static CompletableFuture updateEventById(String id, Eveniment updated) {
+    public synchronized static CompletableFuture<Void> updateEventById(String id, Eveniment updated) {
         return CompletableFuture.runAsync(() -> {
             Document updatedEvent = new Document()
                     .append("event", updated.getEvent())
@@ -137,7 +138,7 @@ public class EvenimentDAO {
      * @param id the ObjectId from database
      * @return Awaitable instance
      */
-    public synchronized static CompletableFuture deleteEventById(String id) {
+    public synchronized static CompletableFuture<Void> deleteEventById(String id) {
         return CompletableFuture.runAsync(() -> {
             MongoDatabase db = DBConnection.getDatabase();
             MongoCollection<Document> events = db.getCollection("events");
@@ -148,14 +149,13 @@ public class EvenimentDAO {
     /**
      * Delete past events
      */
-    public static void checkPastEvents() {
-        worker = new Thread(() -> {
+    public static CompletableFuture<Void> checkPastEvents() {
+        return CompletableFuture.runAsync(() -> {
             List<Eveniment> allEvents = findAll();
             List<Eveniment> toDelete = allEvents.stream()
                     .filter(event -> new Date().compareTo(event.getDate()) > 0)
                     .collect(Collectors.toList());
             toDelete.forEach(event -> {
-                System.out.println(event);
                 try {
                     deleteEventById(event.get_id()).get();
                 } catch (InterruptedException | ExecutionException e) {
@@ -163,6 +163,5 @@ public class EvenimentDAO {
                 }
             });
         });
-        worker.start();
     }
 }

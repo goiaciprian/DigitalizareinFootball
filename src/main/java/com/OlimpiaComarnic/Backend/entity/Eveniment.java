@@ -1,7 +1,5 @@
 package com.OlimpiaComarnic.Backend.entity;
 
-import org.bson.types.ObjectId;
-
 import java.util.Date;
 
 /**
@@ -22,7 +20,7 @@ public class Eveniment implements Comparable<Eveniment> {
     }
 
     public Eveniment(String event, Date date) {
-        this._id = new ObjectId().toString();
+        this._id = "null";
         this.event = event;
         this.date = date;
     }

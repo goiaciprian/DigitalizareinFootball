@@ -22,7 +22,7 @@ _Proiect realizat in cadrul [**Facultatii de Inginerie Electrica si Stiinta Calc
 2. Copiati codul pe masina locala cu comanda:
 
 ```
-git clone https://github.com/vsDeus/DigitalizareinFootball.git
+git clone https://github.com/goiaciprian/DigitalizareinFootball.git
 ```
 
 3. Deschideti proiectul cu eclipse sau intellij

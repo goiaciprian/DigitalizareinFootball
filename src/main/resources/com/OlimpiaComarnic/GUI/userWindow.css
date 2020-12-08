@@ -1,5 +1,5 @@
 .anchorMain {
-    -fx-background: radial-gradient(center 50% 50%, radius 100%, #ffffff 30%, #08bcec)
+    -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #ffffff 30%, #08bcec)
 }
 
 .default-color0.chart-bar {

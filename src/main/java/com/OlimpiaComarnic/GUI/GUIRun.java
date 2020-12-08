@@ -9,11 +9,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
 
 public class GUIRun extends Application {
 
     public static Stage currStage;
+    public Timer timer;
 
     public static void main(String[] args) {
         launch(args);
@@ -25,7 +28,7 @@ public class GUIRun extends Application {
         CompletableFuture.runAsync(DBConnection::createConn);
 
         // Deletes past events;
-        EvenimentDAO.checkPastEvents();
+        checkEventsSchedule();
 
         currStage = primaryStage;
 
@@ -47,7 +50,27 @@ public class GUIRun extends Application {
                 adminWindowController.schedule.cancel();
             } catch (NullPointerException ignored) {
             }
+            try {
+                timer.cancel();
+            } catch (NullPointerException ignored) {
+            }
         });
+
         primaryStage.show();
+    }
+
+    private void checkEventsSchedule() {
+        timer = new Timer();
+        TimerTask update = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    EvenimentDAO.checkPastEvents().get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+//        timer.scheduleAtFixedRate(update, 6 * 1000, 6 * 1000);
     }
 }

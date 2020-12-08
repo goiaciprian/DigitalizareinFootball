@@ -1,22 +1,20 @@
 package com.OlimpiaComarnic.Backend.dao;
 
 import com.OlimpiaComarnic.Backend.entity.Player;
+import com.OlimpiaComarnic.Backend.entity.User;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Updates;
 import org.bson.Document;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class PlayerDAO {
-
-    public static Thread worker;
 
     /**
      * Method that returns all players from database
@@ -50,7 +48,7 @@ public class PlayerDAO {
                 rez.add(player);
             }
         } catch (Exception ignored) {
-            System.err.println("Error in findAll players");
+
         }
 
         return rez;
@@ -132,9 +130,9 @@ public class PlayerDAO {
      *
      * @param player new player to add in database
      */
-    public static synchronized void insertPlayer(Player player) {
+    public static synchronized CompletableFuture<Void> insertPlayer(Player player) {
 
-        worker = new Thread(() -> {
+        return CompletableFuture.runAsync(() -> {
 
             try {
                 assert findOne(player.getNume()) == null : "Player already in database";
@@ -167,92 +165,68 @@ public class PlayerDAO {
             players.insertOne(playerDB);
 
         });
-        worker.start();
     }
 
     /**
      * Update method replace in the old player the new values and puts then in db
-     //      @param currPlayer current player
+     * //      @param currPlayer current player
+     *
      * @param newPlayer updated player
      */
-    public static synchronized void updateOne(Player currPlayer, Player newPlayer) {
+    public static synchronized CompletableFuture<Void> updateOne(String username, Player newPlayer) {
 
-        worker = new Thread( () -> {
+        return CompletableFuture.runAsync(() -> {
 
-            String currNume = currPlayer.getNume();
-            String currUsername = currPlayer.getUsername();
-            int currNrTricou = currPlayer.getNumarTricou();
-            int currNrPase = currPlayer.getNumarTricou();
-            int currGoluri = currPlayer.getGoluri();
-            int currGalbene = currPlayer.getCartonaseGalbene();
-            int currRosii = currPlayer.getCartonaseRosii();
-            HashMap<String, Integer> currAparitii = currPlayer.getAparitii();
+            List<Document> arrDoc = new ArrayList<>();
+            for (Map.Entry<String, Integer> map : newPlayer.getAparitii().entrySet()) {
+                arrDoc.add(
+                        new Document()
+                                .append(map.getKey(), map.getValue())
+                );
+            }
 
-            String newNume = newPlayer.getNume();
-            String newUsername = newPlayer.getUsername();
-            int newNrTricou = newPlayer.getNumarTricou();
-            int newNrPase = newPlayer.getNumarTricou();
-            int newGoluri = newPlayer.getGoluri();
-            int newGalbene = newPlayer.getCartonaseGalbene();
-            int newRosii = newPlayer.getCartonaseRosii();
-            HashMap<String, Integer> newAparitii = newPlayer.getAparitii();
+            if (!username.equals(newPlayer.getUsername())) {
+                User toChangeUsername = UserDAO.findUser(username);
+                if (toChangeUsername != null) {
+                    toChangeUsername.setUsername(newPlayer.getUsername());
+                    UserDAO.updateUserByUsername(username, toChangeUsername);
+                }
+            }
+
+            Document toReplace = new Document()
+                    .append("nume", newPlayer.getNume())
+                    .append("username", newPlayer.getUsername())
+                    .append("nrTricou", newPlayer.getNumarTricou())
+                    .append("goluri", newPlayer.getGoluri())
+                    .append("paseDeGol", newPlayer.getPaseGol())
+                    .append("cartonaseGalbene", newPlayer.getCartonaseGalbene())
+                    .append("cartonaseRosii", newPlayer.getCartonaseRosii())
+                    .append("aparitii", arrDoc);
+
 
             MongoDatabase proiect = DBConnection.getDatabase();
             MongoCollection<Document> players = proiect.getCollection("players");
-
-            if (!currNume.equals(newNume)) {
-                players.updateOne(Filters.eq("nume", currNume), Updates.set("nume", newNume));
-            }
-            if (!currUsername.equals(newUsername)) {
-                players.updateOne(Filters.eq("username", currUsername), Updates.set("username", newUsername));
-            }
-            if (currNrTricou != newNrTricou) {
-                players.updateOne(Filters.eq("nrTricou", currNrTricou), Updates.set("nrTricou", newNrTricou));
-            }
-            if (currNrPase != newNrPase) {
-                players.updateOne(Filters.eq("paseDeGol", currNrPase), Updates.set("paseDeGol", newNrPase));
-            }
-            if (currGoluri != newGoluri) {
-                players.updateOne(Filters.eq("goluri", currGoluri), Updates.set("goluri", newGoluri));
-            }
-            if (currGalbene != newGalbene) {
-                players.updateOne(Filters.eq("cartonaseGalbene", currGalbene), Updates.set("cartonaseGalbene", newGalbene));
-            }
-            if (currRosii != newRosii) {
-                players.updateOne(Filters.eq("cartonaseRosii", currRosii), Updates.set("cartonaseRosii", newRosii));
-            }
-            if(!currAparitii.equals(newAparitii)) {
-                List<Document> currAparitiiList = new ArrayList<>();
-                for(Map.Entry<String, Integer> currApar: currAparitii.entrySet()) {
-                    currAparitiiList.add(new Document().append(currApar.getKey(), currApar.getValue()));
-                }
-                List<Document> newAparitiiList = new ArrayList<>();
-                for(Map.Entry<String, Integer> newApar: newAparitii.entrySet()) {
-                    newAparitiiList.add( new Document().append(newApar.getKey(), newApar.getValue()));
-                }
-                players.updateMany(Filters.eq("aparitii", currAparitiiList), Updates.set("aparitii", newAparitiiList));
-            }
+            players.replaceOne(Filters.eq("username", username), toReplace);
 
         });
-        worker.start();
     }
 
     /**
-     *  Delete player from database
-     * @param player player to delete
+     * Delete player from database
+     *
+     * @param username the username associated with the player to delete
      */
-    public static synchronized void deleteOne(Player player) {
-        worker = new Thread( () -> {
+    public static synchronized CompletableFuture<Void> deleteOne(String username) {
+        return CompletableFuture.runAsync(() -> {
 
-                MongoDatabase proiect = DBConnection.getDatabase();
-                MongoCollection<Document> players = proiect.getCollection("players");
-                players.deleteOne(
-                        Filters.and(
-                                Filters.eq("nume", player.getNume()),
-                                Filters.eq("nrTricou", player.getNumarTricou())
-                        )
-                );
+            MongoDatabase proiect = DBConnection.getDatabase();
+            MongoCollection<Document> players = proiect.getCollection("players");
+            players.deleteOne(Filters.eq("username", username));
+            try {
+                UserDAO.deleteUser(username);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
-        worker.start();
     }
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane fx:id="root" prefHeight="474.0" prefWidth="615.0" styleClass="logInAnchorPane" stylesheets="@../logIn.css"
+            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.OlimpiaComarnic.GUI.Managers.playersManagerController">
+   <children>
+      <ListView fx:id="allPlayers" layoutX="14.0" layoutY="14.0" prefHeight="372.0" prefWidth="174.0"/>
+      <TabPane fx:id="tabs" layoutX="205.0" layoutY="14.0" styleClass="allTabs" stylesheets="@playersManagerCss.css">
+         <tabs>
+            <Tab closable="false" text="Informatii jucator">
+               <content>
+                  <AnchorPane fx:id="infoAnchor" prefHeight="362.0" prefWidth="379.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="77.0" layoutY="42.0" prefHeight="18.0" prefWidth="79.0"
+                               styleClass="labels" stylesheets="@playersManagerCss.css" text="Username:"/>
+                        <TextField fx:id="username" layoutX="178.0" layoutY="38.0" styleClass="inputs"/>
+                        <Label alignment="CENTER" layoutX="67.0" layoutY="117.0" prefHeight="18.0" prefWidth="98.0"
+                               styleClass="labels" stylesheets="@playersManagerCss.css" text="Numar tricou:"/>
+                        <TextField fx:id="nume" layoutX="177.0" layoutY="75.0" styleClass="inputs"/>
+                        <Label alignment="CENTER" layoutX="77.0" layoutY="79.0" prefHeight="18.0" prefWidth="79.0"
+                               styleClass="labels" stylesheets="@playersManagerCss.css" text="Nume:"/>
+                        <TextField fx:id="nrTricou" layoutX="177.0" layoutY="113.0" styleClass="inputs"/>
+                        <Label alignment="CENTER" layoutX="77.0" layoutY="154.0" prefHeight="18.0" prefWidth="79.0"
+                               styleClass="labels" stylesheets="@playersManagerCss.css" text="Goluri:"/>
+                        <TextField fx:id="goluri" layoutX="177.0" layoutY="150.0" styleClass="inputs"/>
+                        <Label alignment="CENTER" layoutX="67.0" layoutY="187.0" prefHeight="18.0" prefWidth="98.0"
+                               styleClass="labels" stylesheets="@playersManagerCss.css" text="Pase de gol: "/>
+                        <TextField fx:id="paseDeGol" layoutX="177.0" layoutY="183.0" styleClass="inputs"/>
+                        <Label alignment="CENTER" layoutX="52.0" layoutY="224.0" prefHeight="18.0" prefWidth="117.0"
+                               styleClass="labels" stylesheets="@playersManagerCss.css" text="Cartonase galbene:"/>
+                        <TextField fx:id="cartGalbene" layoutX="177.0" layoutY="220.0" styleClass="inputs"/>
+                        <Label alignment="CENTER" layoutX="67.0" layoutY="266.0" prefHeight="18.0" prefWidth="98.0"
+                               styleClass="labels" stylesheets="@playersManagerCss.css" text="Cartonase rosii:"/>
+                        <TextField fx:id="cartRosii" layoutX="177.0" layoutY="262.0" styleClass="inputs"/>
+                        <Label fx:id="passwordLabel" alignment="CENTER" layoutX="54.0" layoutY="305.0" prefHeight="18.0"
+                               prefWidth="113.0" styleClass="labels" stylesheets="@playersManagerCss.css"
+                               text="Modifica parola:"/>
+                        <PasswordField fx:id="passwordField" layoutX="177.0" layoutY="301.0" styleClass="inputs"/>
+                        <Button fx:id="playersAddModify" defaultButton="true" layoutX="148.0" layoutY="361.0"
+                                mnemonicParsing="false" prefHeight="28.0" prefWidth="82.0" styleClass="logInButt"
+                                text="Adauga"/>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab closable="false" text="Aparitii jucator">
+               <content>
+                  <AnchorPane fx:id="aparitiiAnchor" prefHeight="362.0" prefWidth="379.0">
+                     <children>
+                        <TableView fx:id="aparitii" focusTraversable="false" layoutX="18.0" layoutY="19.0"
+                                   prefHeight="291.0" prefWidth="358.0">
+                           <columns>
+                              <TableColumn fx:id="numeMeci" prefWidth="155.0" text="Meci"/>
+                              <TableColumn fx:id="minuteInMeci" prefWidth="75.0" text="Minute"/>
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="aparitiiNume" layoutX="29.0" layoutY="358.0" prefHeight="26.0"
+                                   prefWidth="127.0" styleClass="inputs"/>
+                        <TextField fx:id="aparitiiMinute" layoutX="173.0" layoutY="358.0" prefHeight="26.0"
+                                   prefWidth="127.0" styleClass="inputs"/>
+                        <Button fx:id="aparitiiAddModify" defaultButton="true" layoutX="315.0" layoutY="333.0"
+                                mnemonicParsing="false" styleClass="logInButt" text="Adauga"/>
+                        <Button fx:id="aparitiiDelete" disable="true" layoutX="319.0" layoutY="370.0"
+                                mnemonicParsing="false" styleClass="logInButt" text="Sterge"/>
+                        <Label layoutX="59.0" layoutY="341.0" text="Nume meci"/>
+                        <Label layoutX="196.0" layoutY="341.0" text="Minute jucate"/>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Button fx:id="playersDelete" disable="true" layoutX="73.0" layoutY="410.0" mnemonicParsing="false"
+              styleClass="logInButt" text="Sterge"/>
+   </children>
+</AnchorPane>

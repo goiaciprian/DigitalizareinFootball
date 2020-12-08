@@ -1,27 +1,40 @@
 package com.OlimpiaComarnic.Backend.entity;
 
 
+import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 
 
 /**
  * Clasa user contine:
- *    - username
- *    - parola encryptata SHA-256
- *    - daca este admin;
+ * - username
+ * - parola encryptata SHA-256
+ * - daca este admin;
  */
 public class User {
-    private String Username, encPassword;
+    private String Username;
+    private String encPassword;
+    private final String _id;
     private boolean isAdmin;
 
     public User(String username, String password, boolean isAdmin) {
         this.Username = username;
         this.encPassword = hashPass(password);
         this.isAdmin = isAdmin;
+        this._id = new ObjectId().toString();
 
     }
 
-    public User() {}
+    public User(String id) {
+        this._id = id;
+        this.Username = "null";
+        this.encPassword = "null";
+        this.isAdmin = false;
+    }
+
+    public String get_id() {
+        return _id;
+    }
 
     public String getUsername() {
         return Username;

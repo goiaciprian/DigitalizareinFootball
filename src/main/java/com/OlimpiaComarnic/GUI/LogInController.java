@@ -74,7 +74,7 @@ public class LogInController {
 
         User curr = UserDAO.findUser(username);
 
-        CompletableFuture getUser = CompletableFuture.runAsync(() -> {
+        CompletableFuture<Void> getUser = CompletableFuture.runAsync(() -> {
             if (curr != null && !curr.isAdmin()) {
                 loggedIn = PlayerDAO.findOneByUsername(username);
             }

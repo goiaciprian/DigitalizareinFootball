@@ -5,6 +5,7 @@ import com.OlimpiaComarnic.Backend.dao.PlayerDAO;
 import com.OlimpiaComarnic.Backend.entity.Eveniment;
 import com.OlimpiaComarnic.Backend.entity.Player;
 import com.OlimpiaComarnic.GUI.Managers.eventsManagerController;
+import com.OlimpiaComarnic.GUI.Managers.playersManagerController;
 import com.OlimpiaComarnic.GUI.Utils.SaveWindowPosition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import javafx.scene.layout.Region;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 
 public class adminWindowController {
@@ -51,9 +53,9 @@ public class adminWindowController {
     @FXML
     void initialize() {
         position.defaultSetting();
-        initUI();
-        initCharts();
-        backgroundUpdate();
+        CompletableFuture.runAsync(() -> Platform.runLater(this::initUI));
+        CompletableFuture.runAsync(() -> Platform.runLater(this::initCharts));
+        CompletableFuture.runAsync(this::backgroundUpdate);
     }
 
     @FXML
@@ -76,7 +78,11 @@ public class adminWindowController {
     }
 
     public void playersManager() {
-        System.out.println("Players manager open");
+        try {
+            new playersManagerController().start(GUIRun.currStage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void initUI() {
@@ -84,7 +90,7 @@ public class adminWindowController {
             tipEventNext.setText(next.getEvent());
             tipEventNext.setMinWidth(Region.USE_PREF_SIZE);
 
-            SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+            SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm a");
             dataEventNext.setText(SimpleDateFormat.format(next.getDate()));
             dataEventNext.setMinWidth(Region.USE_PREF_SIZE);
 
@@ -175,7 +181,7 @@ public class adminWindowController {
                 });
             }
         };
-        schedule.scheduleAtFixedRate(task, 4 * 1000, 4 * 1000);
+        schedule.scheduleAtFixedRate(task, 2 * 1000, 2 * 1000);
     }
 
 }

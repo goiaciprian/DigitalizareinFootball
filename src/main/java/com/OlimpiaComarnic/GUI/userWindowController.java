@@ -97,7 +97,7 @@ public class userWindowController {
         tipEvent.setText(next.getEvent());
         tipEvent.setMinWidth(Region.USE_PREF_SIZE);
 
-        SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+        SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm a");
         dataEvent.setText(SimpleDateFormat.format(next.getDate()));
         dataEvent.setMinWidth(Region.USE_PREF_SIZE);
 
@@ -133,12 +133,17 @@ public class userWindowController {
                 loggedIn = PlayerDAO.findOneByUsername(loggedIn.getUsername());
                 next = EvenimentDAO.getNextEvent();
                 Platform.runLater(() -> {
-                    initUI();
-                    initChart();
+                    try {
+                        initUI();
+                        initChart();
+                    } catch (NullPointerException ignored) {
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 });
             }
         };
-        schedule.scheduleAtFixedRate(task, 6 * 1000, 6 * 1000);
+        schedule.scheduleAtFixedRate(task, 2 * 1000, 2 * 1000);
     }
 
 }

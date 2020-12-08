@@ -1,8 +1,5 @@
 package com.OlimpiaComarnic.Backend.utils;
 
-import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
-import com.OlimpiaComarnic.Backend.dao.PlayerDAO;
-import com.OlimpiaComarnic.Backend.dao.UserDAO;
 import com.OlimpiaComarnic.GUI.GUIRun;
 import com.OlimpiaComarnic.GUI.Popup.Popup1;
 import com.mongodb.MongoClient;
@@ -65,16 +62,9 @@ public class DBConnection {
      */
     public static synchronized void closeConn() {
         try {
-            if (PlayerDAO.worker != null)
-                PlayerDAO.worker.join();
-            if (UserDAO.worker != null)
-                UserDAO.worker.join();
-            if (EvenimentDAO.worker != null)
-                EvenimentDAO.worker.join();
-        } catch (Exception ignored) {
-        } finally {
-            if (con != null)
-                con.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

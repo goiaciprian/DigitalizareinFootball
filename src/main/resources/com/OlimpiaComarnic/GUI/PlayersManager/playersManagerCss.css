@@ -1,0 +1,12 @@
+.labels {
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+}
+
+*.tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab:pressed {
+
+}

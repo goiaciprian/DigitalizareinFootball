@@ -54,6 +54,7 @@ public class eventsManagerController extends Application {
             isSelected = null;
             changeView();
             createView.requestFocus();
+            allEvents.getSelectionModel().select(-1);
         });
     }
 
@@ -119,6 +120,7 @@ public class eventsManagerController extends Application {
         ObservableList<Eveniment> labelsEvents = FXCollections.observableArrayList(found);
         allEvents.setItems(labelsEvents);
         allEvents.setFocusTraversable(false);
+        initListView();
     }
 
     private void initListView() {
@@ -143,6 +145,7 @@ public class eventsManagerController extends Application {
 
         allEvents.setOnMouseClicked(e -> {
             isSelected = null;
+            allEvents.getSelectionModel().select(-1);
             changeView();
         });
     }
@@ -153,7 +156,7 @@ public class eventsManagerController extends Application {
             numeEventCreate.setText("");
             numeEventCreate.setPromptText("Exemplu: Meci: Barceona");
             dateTimePicker.setDateTimeValue(LocalDateTime.now());
-            eventCreate.setText("Submit");
+            eventCreate.setText("Adauga");
             eventCreate.setOnAction((e) -> createEvent());
             deleteEvent.setDisable(true);
         } else {
@@ -161,7 +164,7 @@ public class eventsManagerController extends Application {
             Date dataEvent = isSelected.getDate();
             numeEventCreate.setText(numeEvent);
             dateTimePicker.setDateTimeValue(dataEvent.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-            eventCreate.setText("Update");
+            eventCreate.setText("Modifica");
             eventCreate.setOnAction((e) -> updateEvent());
             deleteEvent.setDisable(false);
             deleteEvent.setOnAction((e) -> {
@@ -201,11 +204,15 @@ public class eventsManagerController extends Application {
         TimerTask update = new TimerTask() {
             @Override
             public void run() {
-                Platform.runLater(() -> getAllEvents());
+                Platform.runLater(() -> {
+                    int focused = allEvents.getSelectionModel().getSelectedIndex();
+                    getAllEvents();
+                    allEvents.getSelectionModel().select(focused);
+                });
             }
         };
 
         schedule = new Timer();
-        schedule.scheduleAtFixedRate(update, 4 * 1000, 4 * 1000);
+        schedule.scheduleAtFixedRate(update, 2 * 1000, 2 * 1000);
     }
 }

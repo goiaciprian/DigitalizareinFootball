@@ -3,5 +3,7 @@ com.OlimpiaComarnic.Backend.dao
 com.OlimpiaComarnic.Backend.entity
 com.OlimpiaComarnic.Backend.utils
 com.OlimpiaComarnic.GUI
+com.OlimpiaComarnic.GUI.Managers
+com.OlimpiaComarnic.GUI.Managers.Utils
 com.OlimpiaComarnic.GUI.Popup
 com.OlimpiaComarnic.GUI.Utils

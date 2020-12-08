@@ -32,4 +32,12 @@ public class Aparitie {
     public void setMinuteJucate(int minuteJucate) {
         this.minuteJucate.set(minuteJucate);
     }
+
+    @Override
+    public String toString() {
+        return "Aparitie{" +
+                "numeMeci=" + numeMeci +
+                ", minuteJucate=" + minuteJucate +
+                '}';
+    }
 }

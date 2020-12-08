@@ -6,6 +6,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -55,8 +56,8 @@ public class EvenimentDAO {
         MongoDatabase db = DBConnection.getDatabase();
         MongoCollection<Document> events = db.getCollection("events");
 
-        try (MongoCursor<Document> cursor = events.find(Filters.gt("data", new Date())).iterator()) {
-            while (cursor.hasNext()) {
+        try (MongoCursor<Document> cursor = events.find(Filters.gt("data", new Date())).sort(Sorts.ascending("data")).iterator()) {
+            if (cursor.hasNext()) {
                 Document curr = cursor.next();
                 found = new Eveniment(curr.get("_id").toString());
                 found.setEvent(curr.getString("event"));

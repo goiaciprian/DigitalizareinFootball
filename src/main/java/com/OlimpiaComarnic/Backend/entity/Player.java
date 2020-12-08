@@ -214,13 +214,35 @@ public class Player {
      * @param titluMeci titlul meciului in care a jucat
      */
     public void addAparitie(int minute, String titluMeci) {
-        if(minute < 0)
+        if (minute < 0)
             return;
         aparitii.put(titluMeci, minute);
     }
 
     /**
-     *  Returneaza un hashmap cu toate meciurile si minutele jucate
+     * Sterge o aparitie dupa numele meciului
+     *
+     * @param titluMeci numele meciului care trebuie sters
+     */
+    public void removeAparitie(String titluMeci) {
+        aparitii.remove(titluMeci);
+    }
+
+    /**
+     * Inlocuieste o aparitie
+     *
+     * @param oldKey numele meciului care trebuie modificat
+     * @param newKey numele noului meci
+     * @param minute numerul de minute jucate in noul meci;
+     */
+    public void updateAparitie(String oldKey, String newKey, int minute) {
+        aparitii.remove(oldKey);
+        aparitii.put(newKey, minute);
+    }
+
+    /**
+     * Returneaza un hashmap cu toate meciurile si minutele jucate
+     *
      * @return toate meciuile si minutele jucte
      */
     public HashMap<String, Integer> getAparitii() {

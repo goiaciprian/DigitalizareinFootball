@@ -181,7 +181,7 @@ public class adminWindowController {
                 });
             }
         };
-        schedule.scheduleAtFixedRate(task, 4 * 1000, 4 * 1000);
+        schedule.scheduleAtFixedRate(task, 2 * 1000, 2 * 1000);
     }
 
 }

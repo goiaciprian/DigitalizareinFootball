@@ -1,5 +1,6 @@
 package com.OlimpiaComarnic.Backend;
 
+import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
 
 import java.text.ParseException;
@@ -26,6 +27,7 @@ public class Main {
 //        p1.addAparitie(55, "meci7");
 //
 //        UserDAO.insertUser(new User("emy112", "emy112", false)).get();1
+        EvenimentDAO.getNextEvent();
         DBConnection.closeConn();
     }
 }

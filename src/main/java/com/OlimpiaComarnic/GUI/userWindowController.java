@@ -133,12 +133,17 @@ public class userWindowController {
                 loggedIn = PlayerDAO.findOneByUsername(loggedIn.getUsername());
                 next = EvenimentDAO.getNextEvent();
                 Platform.runLater(() -> {
-                    initUI();
-                    initChart();
+                    try {
+                        initUI();
+                        initChart();
+                    } catch (NullPointerException ignored) {
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 });
             }
         };
-        schedule.scheduleAtFixedRate(task, 6 * 1000, 6 * 1000);
+        schedule.scheduleAtFixedRate(task, 2 * 1000, 2 * 1000);
     }
 
 }

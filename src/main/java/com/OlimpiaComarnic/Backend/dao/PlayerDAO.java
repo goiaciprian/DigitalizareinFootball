@@ -48,7 +48,7 @@ public class PlayerDAO {
                 rez.add(player);
             }
         } catch (Exception ignored) {
-            System.err.println("Error in findAll players");
+
         }
 
         return rez;

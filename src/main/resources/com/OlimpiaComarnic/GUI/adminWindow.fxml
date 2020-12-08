@@ -81,13 +81,13 @@
                                                             </font>
                                                         </Label>
                                                         <Label fx:id="tipEventNext" layoutX="10.0" layoutY="49.0"
-                                                               prefHeight="30.0" prefWidth="179.0" text="TEST">
+                                                               prefHeight="30.0" prefWidth="198.0">
                                                             <font>
                                                                 <Font size="20.0"/>
                                                             </font>
                                                         </Label>
                                                         <Label fx:id="dataEventNext" layoutX="10.0" layoutY="82.0"
-                                                               prefHeight="30.0" prefWidth="219.0" text="TEST">
+                                                               prefHeight="30.0" prefWidth="219.0">
                                                             <font>
                                                                 <Font size="20.0"/>
                                                             </font>

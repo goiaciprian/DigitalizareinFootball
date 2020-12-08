@@ -156,7 +156,7 @@ public class eventsManagerController extends Application {
             numeEventCreate.setText("");
             numeEventCreate.setPromptText("Exemplu: Meci: Barceona");
             dateTimePicker.setDateTimeValue(LocalDateTime.now());
-            eventCreate.setText("Submit");
+            eventCreate.setText("Adauga");
             eventCreate.setOnAction((e) -> createEvent());
             deleteEvent.setDisable(true);
         } else {
@@ -164,7 +164,7 @@ public class eventsManagerController extends Application {
             Date dataEvent = isSelected.getDate();
             numeEventCreate.setText(numeEvent);
             dateTimePicker.setDateTimeValue(dataEvent.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-            eventCreate.setText("Update");
+            eventCreate.setText("Modifica");
             eventCreate.setOnAction((e) -> updateEvent());
             deleteEvent.setDisable(false);
             deleteEvent.setOnAction((e) -> {
@@ -213,6 +213,6 @@ public class eventsManagerController extends Application {
         };
 
         schedule = new Timer();
-        schedule.scheduleAtFixedRate(update, 4 * 1000, 4 * 1000);
+        schedule.scheduleAtFixedRate(update, 2 * 1000, 2 * 1000);
     }
 }

@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>D:\vsc\javaIDE\DigitalizareinFootball\target\DigitalizareinFootball-2.0-jar-with-dependencies.jar</jar>
+  <jar>D:\vsc\javaIDE\DigitalizareinFootball\target\DigitalizareinFootball-2.0.1-jar-with-dependencies.jar</jar>
   <outfile>D:\vsc\javaIDE\DigitalizareinFootball\deploy\OlimpiaComarnic.exe</outfile>
   <errTitle>An error has occured.</errTitle>
   <cmdLine></cmdLine>
@@ -27,12 +27,12 @@
     <runtimeBits>64/32</runtimeBits>
   </jre>
   <versionInfo>
-    <fileVersion>2.0.0.0</fileVersion>
-    <txtFileVersion>1.0.0</txtFileVersion>
+    <fileVersion>2.0.1.5</fileVersion>
+    <txtFileVersion>2.0.7</txtFileVersion>
     <fileDescription>Windows aplication for Olimpia Comarnic project.</fileDescription>
     <copyright>UNITBv</copyright>
-    <productVersion>2.0.0.0</productVersion>
-    <txtProductVersion>1.0.0</txtProductVersion>
+    <productVersion>2.0.1.5</productVersion>
+    <txtProductVersion>2.0.9</txtProductVersion>
     <productName>OlimpiaComarnic</productName>
     <companyName>OlimpiaComarnic</companyName>
     <internalName>OlimpiaComarnic</internalName>

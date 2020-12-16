@@ -71,6 +71,6 @@ public class GUIRun extends Application {
                 }
             }
         };
-//        timer.scheduleAtFixedRate(update, 6 * 1000, 6 * 1000);
+        timer.scheduleAtFixedRate(update, 5 * 1000, 5 * 1000);
     }
 }

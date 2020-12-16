@@ -14,6 +14,7 @@ import org.bson.Document;
 import org.junit.AfterClass;
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -32,10 +33,15 @@ public class BackendTest {
     @Test
     public void findAllEvents() {
         List<Eveniment> all = EvenimentDAO.findAll();
-        int size = all.size() - 1;
+        int size = all.size();
+        if(size == 0) {
+            assertTrue(true);
+            return;
+        }
 
-        Eveniment expected = all.get(size);
+        Eveniment expected = all.get(size-1);
         Eveniment actual = EvenimentDAO.findOneById(expected.get_id());
+
 
         assert actual != null : "findOneEvent returned null";
         assertEquals(expected.toString(), actual.toString());
@@ -44,7 +50,12 @@ public class BackendTest {
     @Test
     public void insertUpdateDeleteEvent() throws ExecutionException, InterruptedException {
 
-        Eveniment newEvent = new Eveniment("jUnitE", new Date());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+
+        cal.add(Calendar.DATE, 3);
+
+        Eveniment newEvent = new Eveniment("jUnitE", cal.getTime());
         EvenimentDAO.insertNewEvent(newEvent).get();
         List<Eveniment> all = EvenimentDAO.findAll();
 
@@ -59,7 +70,8 @@ public class BackendTest {
 
         assertTrue(success);
 
-        EvenimentDAO.updateEventById(newEvent.get_id(), new Eveniment("jUnitE2", new Date())).get();
+        cal.add(Calendar.DATE, 7);
+        EvenimentDAO.updateEventById(newEvent.get_id(), new Eveniment("jUnitE2", cal.getTime())).get();
 
         assertEquals("jUnitE2", EvenimentDAO.findOneById(newEvent.get_id()).getEvent());
 

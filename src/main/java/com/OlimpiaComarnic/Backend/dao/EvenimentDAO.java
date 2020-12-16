@@ -32,7 +32,7 @@ public class EvenimentDAO {
         MongoDatabase db = DBConnection.getDatabase();
         MongoCollection<Document> events = db.getCollection("events");
 
-        try (MongoCursor<Document> cursor = events.find().iterator()) {
+        try (MongoCursor<Document> cursor = events.find(Filters.gt("data", new Date())).sort(Sorts.ascending("data")).iterator()) {
             while (cursor.hasNext()) {
                 Document currEvent = cursor.next();
                 Eveniment event = new Eveniment(currEvent.get("_id").toString());

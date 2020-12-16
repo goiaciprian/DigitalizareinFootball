@@ -95,8 +95,8 @@ public class adminWindowController {
             dataEventNext.setMinWidth(Region.USE_PREF_SIZE);
 
         } else {
-            tipEventNext.setText("Nu sunt sunt evenimente viitoare");
-            dataEventNext.setVisible(false);
+            tipEventNext.setText("Nu sunt sunt evenimente");
+            dataEventNext.setText("");
         }
     }
 

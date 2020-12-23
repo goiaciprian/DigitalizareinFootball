@@ -90,7 +90,7 @@ public class userWindowController {
         cartRosii.setMinWidth(Region.USE_PREF_SIZE);
 
         if (next == null) {
-            tipEvent.setText("Nu sunt sunt evenimente viitoare");
+            tipEvent.setText("Nu sunt evenimente");
             dataEvent.setVisible(false);
             return;
         }

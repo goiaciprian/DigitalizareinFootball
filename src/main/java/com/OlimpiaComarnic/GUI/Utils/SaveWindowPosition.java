@@ -18,7 +18,7 @@ public class SaveWindowPosition {
     public final double DEFAULT_Y = (primScreenBounds.getHeight() - GUIRun.currStage.getHeight()) / 2;
     public final double DEFAULT_WIDTH = 900;
     public final double DEFAULT_HEIGHT = 515;
-    public final double DEFAULT_WIDTH_ADMIN = 1000;
+    public final double DEFAULT_WIDTH_ADMIN = 1250;
     public final boolean DEFAULT_MAXIMIZED = false;
     public String node_name;
     public Preferences pref;

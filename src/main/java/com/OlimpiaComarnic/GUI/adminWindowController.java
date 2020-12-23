@@ -17,6 +17,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 
@@ -33,6 +34,9 @@ public class adminWindowController {
 
     @FXML
     AnchorPane anchorPane;
+
+    @FXML
+    ScrollPane scrollPane;
 
     @FXML
     Button logOutButt, managerEvents, managerJucatori;
@@ -95,7 +99,7 @@ public class adminWindowController {
             dataEventNext.setMinWidth(Region.USE_PREF_SIZE);
 
         } else {
-            tipEventNext.setText("Nu sunt sunt evenimente");
+            tipEventNext.setText("Nu sunt evenimente");
             dataEventNext.setText("");
         }
     }

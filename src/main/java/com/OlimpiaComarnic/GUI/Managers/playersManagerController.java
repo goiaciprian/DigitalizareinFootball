@@ -211,8 +211,23 @@ public class playersManagerController extends Application {
     }
 
     private void addPlayer() {
-        if (username.getText().equals("") || nume.getText().equals("") || passwordField.getText().equals(""))
+        if (username.getText().equals("") || nume.getText().equals("") || passwordField.getText().equals("")) {
+            if(username.getText().equals(""))
+                username.setStyle("-fx-border-color: red");
+
+            if(nume.getText().equals(""))
+                nume.setStyle("-fx-border-color: red");
+
+            if(passwordField.getText().equals(""))
+                passwordField.setStyle("-fx-border-color: red");
+
             return;
+        }
+
+        username.setStyle("-fx-border-color: black");
+        nume.setStyle("-fx-border-color: black");
+        passwordField.setStyle("-fx-border-color: black");
+
         User newUser = new User(username.getText(), passwordField.getText(), false);
         Player newPlayer = new Player();
 
@@ -235,27 +250,39 @@ public class playersManagerController extends Application {
     }
 
     private void modificaPlayer() {
+        boolean usernameToUpdate = false;
+        System.err.println("da in modificre jucator");
         String usernameS = username.getText();
         String numeS = nume.getText();
         String passS = passwordField.getText();
-        if (usernameS.equals("") || numeS.equals(""))
+        if (usernameS.equals("") || numeS.equals("")) {
+            if(usernameS.equals(""))
+                username.setStyle("-fx-border-color: red");
+
+            if(numeS.equals(""))
+                nume.setStyle("-fx-border-color: red");
             return;
+        }
+
+        username.setStyle("-fx-border-color: black");
+        nume.setStyle("-fx-border-color: black");
 
         User newUser = null;
-        if (!usernameS.equals(playerSelected.getUsername())) {
-            if (passS.equals(""))
-                return;
+        if(!passwordField.getText().equals("")) {
             newUser = new User(usernameS, passS, false);
             UserDAO.updateUserByUsername(playerSelected.getUsername(), newUser);
+            usernameToUpdate = true;
         }
 
         Player newPlayer = new Player();
 
-        newPlayer.setUsername(username.getText());
+        if(usernameToUpdate)
+            newPlayer.setUsername(username.getText());
+        else
+            newPlayer.setUsername(playerSelected.getUsername());
         newPlayer.setNume(numeS);
 
         setNewPlayerStats(newPlayer);
-
 
         PlayerDAO.updateOne(playerSelected.getUsername(), newPlayer);
         if (newUser == null) {

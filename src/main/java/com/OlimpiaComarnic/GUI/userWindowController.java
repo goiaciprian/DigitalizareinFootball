@@ -8,10 +8,7 @@ import com.OlimpiaComarnic.GUI.Utils.SaveWindowPosition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -51,6 +48,9 @@ public class userWindowController {
 
     @FXML
     NumberAxis yAxisMinute;
+
+
+    private int numarDeAparitiiInChart = 0;
 
     @FXML
     void initialize() {
@@ -94,6 +94,7 @@ public class userWindowController {
             dataEvent.setVisible(false);
             return;
         }
+        dataEvent.setVisible(true);
         tipEvent.setText(next.getEvent());
         tipEvent.setMinWidth(Region.USE_PREF_SIZE);
 
@@ -110,19 +111,22 @@ public class userWindowController {
         XYChart.Series<String, Number> s1 = new XYChart.Series<>();
         int currNrItems = 0;
         final int maxNrItems = 10;
-        for (Map.Entry<String, Integer> e : loggedIn.getAparitii().entrySet()) {
+        for (Map.Entry<String, Integer> e : PlayerDAO.findOneByUsername(loggedIn.getUsername()).getAparitii().entrySet()) {
             if (currNrItems < maxNrItems) {
                 s1.getData().add(new XYChart.Data<>(e.getKey(), e.getValue()));
                 currNrItems++;
             }
         }
+        int size = s1.getData().size();
         if (aparitiiChart.getData().isEmpty())
             aparitiiChart.getData().add(s1);
-        else {
+        else if(size != numarDeAparitiiInChart)
             aparitiiChart.getData().set(0, s1);
-        }
+
         aparitiiChart.setAnimated(false);
         aparitiiChart.setLegendVisible(false);
+
+        numarDeAparitiiInChart = size;
     }
 
     private void backgroundUpdate() {

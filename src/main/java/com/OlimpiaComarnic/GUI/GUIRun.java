@@ -2,6 +2,7 @@ package com.OlimpiaComarnic.GUI;
 
 import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
+import com.OlimpiaComarnic.GUI.Utils.Updater;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,20 +26,6 @@ public class GUIRun extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         //opens database connection
-        CompletableFuture.runAsync(DBConnection::createConn);
-
-        // Deletes past events;
-        checkEventsSchedule();
-
-        currStage = primaryStage;
-
-        Parent parent = FXMLLoader.load(GUIRun.class.getResource("LogIn.fxml"));
-        Scene scene = new Scene(parent);
-
-        primaryStage.setTitle("Olimpia Comarnic Manager");
-        primaryStage.setScene(scene);
-        primaryStage.getIcons().add(new Image(GUIRun.class.getResourceAsStream("olimpiaCom.png")));
-
         //add closing event listener to close database connection and to the timer if there is any
         primaryStage.setOnCloseRequest(windowEvent -> {
             CompletableFuture.runAsync(DBConnection::closeConn);
@@ -55,6 +42,24 @@ public class GUIRun extends Application {
             } catch (NullPointerException ignored) {
             }
         });
+        CompletableFuture.runAsync(DBConnection::createConn);
+
+        new Updater.UpdaterBuilder()
+                .setUrl("https://api.github.com/repos/goiaciprian/DigitalizareinFootball/releases/latest")
+                .build()
+                .Start();
+
+        // Deletes past events;
+        checkEventsSchedule();
+
+        currStage = primaryStage;
+
+        Parent parent = FXMLLoader.load(GUIRun.class.getResource("LogIn.fxml"));
+        Scene scene = new Scene(parent);
+
+        primaryStage.setTitle("Olimpia Comarnic Manager");
+        primaryStage.setScene(scene);
+        primaryStage.getIcons().add(new Image(GUIRun.class.getResourceAsStream("olimpiaCom.png")));
 
         primaryStage.show();
     }

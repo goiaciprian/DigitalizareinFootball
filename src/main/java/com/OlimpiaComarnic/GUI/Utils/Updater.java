@@ -10,10 +10,7 @@ import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Path;
@@ -34,21 +31,25 @@ public class Updater {
         /**
          * Add a specific version for the current build, if the string provided is wrong it will get the version from maven
          *
-         * @param version the version number, has to be 1.0.0
+         * @param version the version number has to be 1.0.0
          */
         public UpdaterBuilder setVersion(String version) {
             String regex = "^\\d+\\.\\d+\\.\\d+$";
             if (version.matches(regex)) {
                 _setVersion(version);
             }
-            else setVersion();
+            else {
+                setVersion();
+            }
 
             return this;
         }
 
         /**
          * Get version maven
+         * @deprecated this method does not work after maven package because the maven file is moved to manifest/mavem/.../pom.xml until it is fix this method is deprecated
          */
+        @Deprecated
         public UpdaterBuilder setVersion() {
             MavenXpp3Reader reader = new MavenXpp3Reader();
             try {
@@ -63,7 +64,7 @@ public class Updater {
         /**
          * Set url where to compare versions and download the update
          *
-         * @param url
+         * @param url download url
          */
         public UpdaterBuilder setUrl(String url) {
             _url = url;
@@ -142,12 +143,14 @@ public class Updater {
 
             String[] results = getVersionAndUrl(conn);
             _downloadUrl = results[1];
+            System.out.println(results[0]);
 
             conn.disconnect();
             return needUpdate(results[0]);
 
         } catch (Exception e) {
-            System.err.println("Error in checking for update\n" + e.getMessage());
+            System.err.println("Error in checking for update\n");
+            e.printStackTrace();
         }
 
         return false;
@@ -201,6 +204,7 @@ public class Updater {
     }
 
     private boolean needUpdate(String version) {
+        System.out.println(_version.compareTo(new Version(version)));
         return _version.compareTo(new Version(version)) < 0;
     }
 

@@ -34,12 +34,13 @@ public class Updater {
         /**
          * Add a specific version for the current build, if the string provided is wrong it will get the version from maven
          *
-         * @param version the version number, has to be 1.0.0.0
+         * @param version the version number, has to be 1.0.0
          */
         public UpdaterBuilder setVersion(String version) {
-            String regex = "^\\d+\\.\\d+\\.\\d+\\.\\d+$";
-            if (version.matches(regex))
+            String regex = "^\\d+\\.\\d+\\.\\d+$";
+            if (version.matches(regex)) {
                 _setVersion(version);
+            }
             else setVersion();
 
             return this;
@@ -89,8 +90,8 @@ public class Updater {
         }
     }
 
-    private Version _version;
-    private String _url;
+    private final Version _version;
+    private final String _url;
     private String _downloadUrl;
 
     private final Path CurrPath = Paths.get("");
@@ -114,7 +115,7 @@ public class Updater {
                             Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
                             dialog.setTitle("Updater");
                             dialog.setHeaderText("Actualizare noua.");
-                            dialog.setContentText("O noua actualizare este disponibil.\nDoriti sa o descarcati?");
+                            dialog.setContentText("O noua actualizare este disponibila.\nDoriti sa o descarcati?");
                             dialog.initOwner(GUIRun.currStage);
                             ((Button)dialog.getDialogPane().lookupButton(ButtonType.OK)).setText("Da");
                             ((Button)dialog.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Nu");

@@ -3,6 +3,7 @@ package com.OlimpiaComarnic.GUI;
 import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
 import com.OlimpiaComarnic.GUI.Utils.Updater;
+import com.OlimpiaComarnic.GUI.Utils.Version;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -143,7 +143,6 @@ public class Updater {
 
             String[] results = getVersionAndUrl(conn);
             _downloadUrl = results[1];
-            System.out.println(results[0]);
 
             conn.disconnect();
             return needUpdate(results[0]);
@@ -204,7 +203,6 @@ public class Updater {
     }
 
     private boolean needUpdate(String version) {
-        System.out.println(_version.compareTo(new Version(version)));
         return _version.compareTo(new Version(version)) < 0;
     }
 

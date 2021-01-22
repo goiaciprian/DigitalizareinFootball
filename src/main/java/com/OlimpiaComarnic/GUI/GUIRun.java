@@ -3,7 +3,6 @@ package com.OlimpiaComarnic.GUI;
 import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
 import com.OlimpiaComarnic.Backend.utils.DBConnection;
 import com.OlimpiaComarnic.GUI.Utils.Updater;
-import com.OlimpiaComarnic.GUI.Utils.Version;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -46,7 +45,7 @@ public class GUIRun extends Application {
         CompletableFuture.runAsync(DBConnection::createConn);
 
         new Updater.UpdaterBuilder()
-                .setVersion("2.3.3")
+                .setVersion("2.4.3")
                 .setUrl("https://api.github.com/repos/goiaciprian/DigitalizareinFootball/releases/latest")
                 .build()
                 .Start();

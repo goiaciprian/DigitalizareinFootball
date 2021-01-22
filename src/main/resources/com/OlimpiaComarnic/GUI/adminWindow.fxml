@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -8,6 +9,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -17,105 +19,150 @@
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="anchorMain" stylesheets="@adminWindow.css" SplitPane.resizableWithParent="false">
                     <children>
-                        <SplitPane dividerPositions="0.2219178082191781" prefHeight="431.0" prefWidth="1000.0" styleClass="anchorMain" stylesheets="@adminWindow.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.23266423357664234" prefHeight="431.0" prefWidth="1000.0" styleClass="anchorMain" stylesheets="@adminWindow.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <items>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorMain" stylesheets="@adminWindow.css">
                                     <children>
                                         <SplitPane dividerPositions="0.5140845070422535" orientation="VERTICAL" prefHeight="429.0" prefWidth="207.0" styleClass="anchorMain" stylesheets="@adminWindow.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <items>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="85.0" prefWidth="237.0" styleClass="anchorMainAdmin">
-                                                    <children>
-                                                        <AnchorPane layoutY="25.0" minHeight="0.0" minWidth="0.0" prefHeight="227.0" prefWidth="205.0">
-                                                            <children>
-                                                                <Button fx:id="managerEvents" layoutX="8.0" layoutY="47.0" mnemonicParsing="false" onAction="#eventsManager" prefHeight="35.0" prefWidth="219.0" styleClass="logInButt" stylesheets="@logIn.css" text="Manager evenimente" />
-                                                                <Text layoutX="81.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Meniu:">
-                                                                    <font>
-                                                                        <Font size="24.0" />
-                                                                    </font>
-                                                                </Text>
-                                                                <Button fx:id="managerJucatori" layoutX="8.0" layoutY="96.0" mnemonicParsing="false" onAction="#playersManager" prefHeight="35.0" prefWidth="219.0" styleClass="logInButt" stylesheets="@logIn.css" text="Manager jucatori" />
-                                                                <Button fx:id="logOutButt" layoutX="8.0" layoutY="154.0" mnemonicParsing="false" onAction="#logOut" prefHeight="35.0" prefWidth="219.0" styleClass="logInButt" stylesheets="@logIn.css" text="Log out" />
-                                                            </children>
-                                           </AnchorPane>
+                                    <AnchorPane SplitPane.resizableWithParent="false">
+                                       <children>
+                                          <StackPane layoutY="2.8984375" AnchorPane.bottomAnchor="0.1015625" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="2.8984375">
+                                             <children>
+                                                              <AnchorPane maxHeight="208.0" maxWidth="205.0" minHeight="0.0" minWidth="0.0" prefHeight="208.0" prefWidth="205.0" StackPane.alignment="CENTER">
+                                                                  <children>
+                                                                      <Button fx:id="managerEvents" layoutX="8.0" layoutY="47.0" mnemonicParsing="false" onAction="#eventsManager" prefHeight="35.0" prefWidth="219.0" styleClass="logInButt" stylesheets="@logIn.css" text="Manager evenimente" />
+                                                                      <Text layoutX="81.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Meniu:">
+                                                                          <font>
+                                                                              <Font size="24.0" />
+                                                                          </font>
+                                                                      </Text>
+                                                                      <Button fx:id="managerJucatori" layoutX="8.0" layoutY="96.0" mnemonicParsing="false" onAction="#playersManager" prefHeight="35.0" prefWidth="219.0" styleClass="logInButt" stylesheets="@logIn.css" text="Manager jucatori" />
+                                                                      <Button fx:id="logOutButt" layoutX="8.0" layoutY="154.0" mnemonicParsing="false" onAction="#logOut" prefHeight="35.0" prefWidth="219.0" styleClass="logInButt" stylesheets="@logIn.css" text="Log out" />
+                                                                  </children>
+                                                 </AnchorPane>
+                                             </children>
+                                          </StackPane>
                                        </children>
                                     </AnchorPane>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="119.0" prefWidth="237.0" styleClass="anchorMainAdmin">
-                                                    <children>
-                                                        <Label layoutX="6.0" layoutY="14.0" text="Urmatorul eveniment">
-                                                            <font>
-                                                                <Font size="24.0" />
-                                                            </font>
-                                                        </Label>
-                                                        <Label fx:id="tipEventNext" layoutX="10.0" layoutY="49.0" prefHeight="30.0" prefWidth="198.0">
-                                                            <font>
-                                                                <Font size="20.0" />
-                                                            </font>
-                                                        </Label>
-                                                        <Label fx:id="dataEventNext" layoutX="10.0" layoutY="82.0" prefHeight="30.0" prefWidth="219.0">
-                                                            <font>
-                                                                <Font size="20.0" />
-                                                            </font>
-                                                        </Label>
-                                                    </children>
-                                                </AnchorPane>
+                                    <AnchorPane>
+                                       <children>
+                                          <StackPane AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                            <AnchorPane maxHeight="119.0" maxWidth="237.0" minHeight="0.0" minWidth="0.0" prefHeight="119.0" prefWidth="237.0" styleClass="anchorMainAdmin" StackPane.alignment="TOP_CENTER">
+                                                                <children>
+                                                                    <Label layoutX="6.0" layoutY="14.0" text="Urmatorul eveniment">
+                                                                        <font>
+                                                                            <Font size="24.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label fx:id="tipEventNext" layoutX="10.0" layoutY="49.0" prefHeight="30.0" prefWidth="226.0">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label fx:id="dataEventNext" layoutX="10.0" layoutY="82.0" prefHeight="30.0" prefWidth="219.0">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                </children>
+                                                            </AnchorPane>
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </AnchorPane>
                                  </items>
                               </SplitPane>
                            </children>
                         </AnchorPane>
-                        <ScrollPane fx:id="scrollPane" prefHeight="1540.0" prefWidth="849.0" styleClass="viewport" stylesheets="@adminWindow.css" SplitPane.resizableWithParent="false">
+                        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" prefHeight="1540.0" prefWidth="849.0" styleClass="viewport" stylesheets="@adminWindow.css" SplitPane.resizableWithParent="false">
                            <content>
-                                      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1595.0" prefWidth="837.0" style="-fx-background-color: transparent;">
-                                          <children>
-                                              <BarChart fx:id="goluriChart" layoutX="60.0" layoutY="42.0" prefHeight="335.0" prefWidth="670.0" title="Goluri" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="42.0">
-                                                  <xAxis>
-                                                      <CategoryAxis side="BOTTOM" fx:id="xAxisNumeG">
-                                             <tickLabelFont>
-                                                <Font size="10.0" />
-                                             </tickLabelFont>
-                                          </CategoryAxis>
-                                                  </xAxis>
-                                                  <yAxis>
-                                                      <NumberAxis fx:id="yAxisGoluri" side="LEFT" />
-                                                  </yAxis>
-                                              </BarChart>
-                                              <BarChart fx:id="paseGolChart" layoutX="56.0" layoutY="395.0" prefHeight="335.0" prefWidth="670.0" title="Pase de gol" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="395.0">
-                                                  <xAxis>
-                                                      <CategoryAxis side="BOTTOM" fx:id="xAxisNumeP">
-                                             <tickLabelFont>
-                                                <Font size="10.0" />
-                                             </tickLabelFont>
-                                          </CategoryAxis>
-                                                  </xAxis>
-                                                  <yAxis>
-                                                      <NumberAxis fx:id="yAxisPaseGol" side="LEFT" />
-                                                  </yAxis>
-                                              </BarChart>
-                                              <BarChart fx:id="cartonaseChart" layoutX="52.0" layoutY="745.0" legendSide="LEFT" prefHeight="335.0" prefWidth="670.0" title="Cartonase" AnchorPane.leftAnchor="52.0">
-                                                  <xAxis>
-                                                      <CategoryAxis side="BOTTOM">
-                                             <tickLabelFont>
-                                                <Font size="10.0" />
-                                             </tickLabelFont>
-                                          </CategoryAxis>
-                                                  </xAxis>
-                                                  <yAxis>
-                                                      <NumberAxis fx:id="yAxisCartonase" side="LEFT" />
-                                                  </yAxis>
-                                              </BarChart>
-                                              <BarChart fx:id="aparitiiChart" layoutX="56.0" layoutY="1080.0" prefHeight="335.0" prefWidth="670.0" title="Aparitii" AnchorPane.leftAnchor="56.0">
-                                                  <xAxis>
-                                                      <CategoryAxis side="BOTTOM" fx:id="xAxisNumeA">
-                                             <tickLabelFont>
-                                                <Font size="10.0" />
-                                             </tickLabelFont>
-                                          </CategoryAxis>
-                                                  </xAxis>
-                                                  <yAxis>
-                                                      <NumberAxis fx:id="yAxisAparitii" side="LEFT" />
-                                                  </yAxis>
-                                              </BarChart>
-                                          </children>
-                                      </AnchorPane>
+                              <StackPane>
+                                 <children>
+                                            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1595.0" prefWidth="837.0" style="-fx-background-color: transparent;">
+                                                <children>
+                                          <AnchorPane layoutX="60.0" layoutY="42.0" prefHeight="1595.0" prefWidth="837.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <StackPane AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+                                                   <children>
+                                                                <BarChart fx:id="goluriChart" minHeight="335.0" minWidth="670.0" title="Goluri" StackPane.alignment="CENTER">
+                                                                    <xAxis>
+                                                                        <CategoryAxis side="BOTTOM" fx:id="xAxisNumeG">
+                                                               <tickLabelFont>
+                                                                  <Font size="10.0" />
+                                                               </tickLabelFont>
+                                                            </CategoryAxis>
+                                                                    </xAxis>
+                                                                    <yAxis>
+                                                                        <NumberAxis fx:id="yAxisGoluri" side="LEFT" />
+                                                                    </yAxis>
+                                                                </BarChart>
+                                                   </children>
+                                                </StackPane>
+                                             </children>
+                                          </AnchorPane>
+                                          <StackPane layoutX="56.0" layoutY="395.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="395.0">
+                                             <children>
+                                                          <BarChart fx:id="paseGolChart" minHeight="335.0" minWidth="670.0" title="Pase de gol" StackPane.alignment="CENTER">
+                                                              <xAxis>
+                                                                  <CategoryAxis side="BOTTOM" fx:id="xAxisNumeP">
+                                                         <tickLabelFont>
+                                                            <Font size="10.0" />
+                                                         </tickLabelFont>
+                                                      </CategoryAxis>
+                                                              </xAxis>
+                                                              <yAxis>
+                                                                  <NumberAxis fx:id="yAxisPaseGol" side="LEFT" />
+                                                              </yAxis>
+                                                          </BarChart>
+                                             </children>
+                                          </StackPane>
+                                          <StackPane layoutX="52.0" layoutY="745.0" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="760.0">
+                                             <children>
+                                                          <BarChart fx:id="cartonaseChart" legendSide="LEFT" minHeight="335.0" minWidth="670.0" title="Cartonase" StackPane.alignment="CENTER">
+                                                              <xAxis>
+                                                                  <CategoryAxis side="BOTTOM">
+                                                         <tickLabelFont>
+                                                            <Font size="10.0" />
+                                                         </tickLabelFont>
+                                                      </CategoryAxis>
+                                                              </xAxis>
+                                                              <yAxis>
+                                                                  <NumberAxis fx:id="yAxisCartonase" side="LEFT" />
+                                                              </yAxis>
+                                                   <StackPane.margin>
+                                                      <Insets bottom="50.0" top="50.0" />
+                                                   </StackPane.margin>
+                                                          </BarChart>
+                                             </children>
+                                          </StackPane>
+                                          <StackPane layoutX="56.0" layoutY="1080.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="1200.0">
+                                             <children>
+                                                          <BarChart fx:id="aparitiiChart" minHeight="335.0" minWidth="670.0" title="Aparitii" StackPane.alignment="CENTER">
+                                                              <xAxis>
+                                                                  <CategoryAxis side="BOTTOM" fx:id="xAxisNumeA">
+                                                         <tickLabelFont>
+                                                            <Font size="10.0" />
+                                                         </tickLabelFont>
+                                                      </CategoryAxis>
+                                                              </xAxis>
+                                                              <yAxis>
+                                                                  <NumberAxis fx:id="yAxisAparitii" side="LEFT" />
+                                                              </yAxis>
+                                                   <StackPane.margin>
+                                                      <Insets top="100.0" />
+                                                   </StackPane.margin>
+                                                          </BarChart>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="100.0" />
+                                             </padding>
+                                          </StackPane>
+                                                </children>
+                                            </AnchorPane>
+                                 </children>
+                              </StackPane>
                            </content>
                         </ScrollPane>
                      </items>

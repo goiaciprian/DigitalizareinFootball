@@ -8,8 +8,12 @@ import com.OlimpiaComarnic.GUI.Managers.eventsManagerController;
 import com.OlimpiaComarnic.GUI.Managers.playersManagerController;
 import com.OlimpiaComarnic.GUI.Utils.SaveWindowPosition;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.DepthTest;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -18,6 +22,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 
@@ -28,7 +33,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class adminWindowController {
 
-    private final SaveWindowPosition position = new SaveWindowPosition("adminWindow");
+    static final SaveWindowPosition position = new SaveWindowPosition("adminWindow");
     public static Timer schedule;
     Eveniment next = EvenimentDAO.getNextEvent();
 

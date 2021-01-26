@@ -19,13 +19,13 @@
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="anchorMain" stylesheets="@adminWindow.css" SplitPane.resizableWithParent="false">
                     <children>
-                        <SplitPane dividerPositions="0.23266423357664234" prefHeight="431.0" prefWidth="1000.0" styleClass="anchorMain" stylesheets="@adminWindow.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane fx:id="mainSplitPane" dividerPositions="0.23266423357664234" prefHeight="431.0" prefWidth="1000.0" styleClass="anchorMain" stylesheets="@adminWindow.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <items>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorMain" stylesheets="@adminWindow.css">
+                                <AnchorPane minHeight="418.0" minWidth="252.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorMain" stylesheets="@adminWindow.css">
                                     <children>
-                                        <SplitPane dividerPositions="0.5140845070422535" orientation="VERTICAL" prefHeight="429.0" prefWidth="207.0" styleClass="anchorMain" stylesheets="@adminWindow.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <SplitPane fx:id="secondSplitPane" dividerPositions="0.5140845070422535" orientation="VERTICAL" prefHeight="429.0" prefWidth="207.0" styleClass="anchorMain" stylesheets="@adminWindow.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <items>
-                                    <AnchorPane SplitPane.resizableWithParent="false">
+                                    <AnchorPane minHeight="211.0" SplitPane.resizableWithParent="false">
                                        <children>
                                           <StackPane layoutY="2.8984375" AnchorPane.bottomAnchor="0.1015625" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="2.8984375">
                                              <children>
@@ -45,7 +45,7 @@
                                           </StackPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane>
+                                    <AnchorPane minHeight="199.0">
                                        <children>
                                           <StackPane AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
                                              <children>

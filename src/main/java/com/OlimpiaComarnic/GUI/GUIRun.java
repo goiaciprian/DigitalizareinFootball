@@ -30,6 +30,16 @@ public class GUIRun extends Application {
         primaryStage.setOnCloseRequest(windowEvent -> {
             CompletableFuture.runAsync(DBConnection::closeConn);
             try {
+                adminWindowController.position.updatePref();
+            }catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            try {
+                userWindowController.position.updatePref();
+            }catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            try {
                 userWindowController.schedule.cancel();
             } catch (NullPointerException ignored) {
             }
@@ -45,7 +55,7 @@ public class GUIRun extends Application {
         CompletableFuture.runAsync(DBConnection::createConn);
 
         new Updater.UpdaterBuilder()
-                .setVersion("2.4.3")
+                .setVersion("2.4.4")
                 .setUrl("https://api.github.com/repos/goiaciprian/DigitalizareinFootball/releases/latest")
                 .build()
                 .Start();

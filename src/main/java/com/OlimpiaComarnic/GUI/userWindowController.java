@@ -22,7 +22,7 @@ import java.util.TimerTask;
 
 public class userWindowController {
 
-    private final SaveWindowPosition position = new SaveWindowPosition("userWindow");
+    static final SaveWindowPosition position = new SaveWindowPosition("userWindow");
     public static Timer schedule;
     Player loggedIn = LogInController.loggedIn;
     Eveniment next = EvenimentDAO.getNextEvent();

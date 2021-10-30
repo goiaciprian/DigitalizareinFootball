@@ -5,6 +5,7 @@ import com.OlimpiaComarnic.Backend.utils.DBConnection;
 
 import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
+import java.util.function.IntBinaryOperator;
 
 
 /**
@@ -30,4 +31,5 @@ public class Main {
         EvenimentDAO.getNextEvent();
         DBConnection.closeConn();
     }
+
 }

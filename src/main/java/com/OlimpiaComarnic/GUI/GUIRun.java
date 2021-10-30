@@ -10,14 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
 
 public class GUIRun extends Application {
 
     public static Stage currStage;
-    public Timer timer;
 
     public static void main(String[] args) {
         launch(args);
@@ -39,18 +36,7 @@ public class GUIRun extends Application {
             }catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-            try {
-                userWindowController.schedule.cancel();
-            } catch (NullPointerException ignored) {
-            }
-            try {
-                adminWindowController.schedule.cancel();
-            } catch (NullPointerException ignored) {
-            }
-            try {
-                timer.cancel();
-            } catch (NullPointerException ignored) {
-            }
+
         });
         CompletableFuture.runAsync(DBConnection::createConn);
 
@@ -61,7 +47,11 @@ public class GUIRun extends Application {
                 .Start();
 
         // Deletes past events;
-        checkEventsSchedule();
+        try {
+            EvenimentDAO.checkPastEvents();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         currStage = primaryStage;
 
@@ -73,20 +63,5 @@ public class GUIRun extends Application {
         primaryStage.getIcons().add(new Image(GUIRun.class.getResourceAsStream("olimpiaCom.png")));
 
         primaryStage.show();
-    }
-
-    private void checkEventsSchedule() {
-        timer = new Timer();
-        TimerTask update = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    EvenimentDAO.checkPastEvents().get();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        timer.scheduleAtFixedRate(update, 5 * 1000, 5 * 1000);
     }
 }

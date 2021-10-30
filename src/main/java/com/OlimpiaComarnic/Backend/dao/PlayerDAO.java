@@ -64,7 +64,7 @@ public class PlayerDAO {
         MongoDatabase proiect = DBConnection.getDatabase();
         MongoCollection<Document> players = proiect.getCollection("players");
 
-        try (MongoCursor<Document> cursor = players.find().iterator()) {
+        try (MongoCursor<Document> cursor = players.find(Filters.eq("nume", playerName)).iterator()) {
             while (cursor.hasNext()) {
                 Document currPlayer = cursor.next();
                 String currPlayerName = currPlayer.getString("nume");

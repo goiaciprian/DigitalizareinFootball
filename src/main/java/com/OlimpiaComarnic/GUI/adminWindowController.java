@@ -4,6 +4,7 @@ import com.OlimpiaComarnic.Backend.dao.EvenimentDAO;
 import com.OlimpiaComarnic.Backend.dao.PlayerDAO;
 import com.OlimpiaComarnic.Backend.entity.Eveniment;
 import com.OlimpiaComarnic.Backend.entity.Player;
+import com.OlimpiaComarnic.Backend.utils.WatchChanges;
 import com.OlimpiaComarnic.GUI.Managers.eventsManagerController;
 import com.OlimpiaComarnic.GUI.Managers.playersManagerController;
 import com.OlimpiaComarnic.GUI.Utils.SaveWindowPosition;
@@ -34,7 +35,6 @@ import java.util.concurrent.CompletableFuture;
 public class adminWindowController {
 
     static final SaveWindowPosition position = new SaveWindowPosition("adminWindow");
-    public static Timer schedule;
     Eveniment next = EvenimentDAO.getNextEvent();
 
     @FXML
@@ -64,14 +64,20 @@ public class adminWindowController {
         position.defaultSetting();
         CompletableFuture.runAsync(() -> Platform.runLater(this::initUI));
         CompletableFuture.runAsync(() -> Platform.runLater(this::initCharts));
-        CompletableFuture.runAsync(this::backgroundUpdate);
+        WatchChanges.WatchCollectionChanges("events", (document) -> Platform.runLater(() -> {
+            next = EvenimentDAO.getNextEvent();
+            initUI();
+        }));
+        WatchChanges.WatchCollectionChanges("players", (document) -> Platform.runLater(() -> {
+            initUI();
+            initCharts();
+        }));
     }
 
     @FXML
     public void logOut() {
         try {
             position.updatePref();
-            schedule.cancel();
             anchorPane.getScene().setRoot(FXMLLoader.load(GUIRun.class.getResource("LogIn.fxml")));
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
@@ -176,21 +182,6 @@ public class adminWindowController {
         cartonaseChart.setAnimated(false);
         cartonaseChart.setLegendVisible(false);
 
-    }
-
-    private void backgroundUpdate() {
-        schedule = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                next = EvenimentDAO.getNextEvent();
-                Platform.runLater(() -> {
-                    initUI();
-                    initCharts();
-                });
-            }
-        };
-        schedule.scheduleAtFixedRate(task, 2 * 1000, 2 * 1000);
     }
 
 }

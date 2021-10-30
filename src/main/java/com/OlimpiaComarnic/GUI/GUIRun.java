@@ -41,7 +41,7 @@ public class GUIRun extends Application {
         CompletableFuture.runAsync(DBConnection::createConn);
 
         new Updater.UpdaterBuilder()
-                .setVersion("2.4.4")
+                .setVersion("2.5.4")
                 .setUrl("https://api.github.com/repos/goiaciprian/DigitalizareinFootball/releases/latest")
                 .build()
                 .Start();
